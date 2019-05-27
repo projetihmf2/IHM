@@ -50,7 +50,8 @@ public class NouvelleFiche extends JDialog implements ActionListener
   {
     String date = "";
     String[] ensDate;
-    if(this.tabText[2].getText().charAt(2) == '-')
+    if( this.tabText[2].getText().charAt(2) == '-' || this.tabText[2].getText().charAt(5) == '-' || this.tabText[5].getText().charAt(2) == '-'
+      ||this.tabText[5].getText().charAt(5) == '-' || this.tabText[8].getText().charAt(2) == '-' || this.tabText[8].getText().charAt(5) == '-')
     {
       ensDate = this.tabText[2].getText().split("-");
       date = ensDate[0] + "/" + ensDate[1] + "/" + ensDate[2];
@@ -66,11 +67,12 @@ public class NouvelleFiche extends JDialog implements ActionListener
   {
     if(this.tabText[0].getText().equals("") || this.tabText[1].getText().equals(""))
     {
-      JOptionPane.showMessageDialog(null, "Le nom ou le prénom n'est pas donné.", "Erreur !", JOptionPane.ERROR_MESSAGE);
+      JOptionPane.showMessageDialog(null, "Le nom et/ou le prénom n'est pas donné.", "Erreur !", JOptionPane.ERROR_MESSAGE);
     }
     else
     {
-      this.panelPrincipal.ajouterFiche(new FicheGenealogique(this.tabText[0].getText(), this.tabText[1].getText()));
+      FicheGenealogique nouvelleFiche = new FicheGenealogique(this.tabText[0].getText(), this.tabText[1].getText(), this.tabText[2].getText(),this.tabText[3].getText(), this.tabText[4].getText());
+      this.panelPrincipal.ajouterFiche(nouvelleFiche);
     }
   }
 

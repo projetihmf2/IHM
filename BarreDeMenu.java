@@ -174,7 +174,15 @@ public class BarreDeMenu extends JMenuBar implements ActionListener
 	// MENU FICHE
 	private void Ajouter()
 	{
-		new NouvelleFiche(this.panelPrincipal);
+		if(this.panelPrincipal.getFichier() == null)
+		{
+			JOptionPane.showMessageDialog(null,"Il n'y a aucun fichier de charger\nVeuillez en charger un ou en créer un.", "Ajouter", JOptionPane.WARNING_MESSAGE);
+		}
+		else
+		{
+			new NouvelleFiche(this.panelPrincipal);
+			this.panelPrincipal.getSelectionFiche().maj();
+		}
 	}
 	private void Supprimer()
 	{
@@ -192,6 +200,7 @@ public class BarreDeMenu extends JMenuBar implements ActionListener
 				choix[i] = liste.get(i);
 			}
 			String s = (String)JOptionPane.showInputDialog(null,"Fiche à supprimer : ", "Supprimer", JOptionPane.PLAIN_MESSAGE, null, choix,"");
+
 		}
 	}
 	private void Modifier()
