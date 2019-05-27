@@ -95,10 +95,11 @@ public class NouvelleFiche extends JDialog implements ActionListener
     if(e.getSource() == this.valider)
     {
       this.creer();
+      this.dispose();
     }
     if(e.getSource() == this.annuler)
     {
-
+      this.dispose();
     }
   }
 }
