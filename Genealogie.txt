@@ -1,0 +1,5 @@
+Duvallet;Christian;05/07/1941;Evreux;Eure;;;;;;;Duvallet;André;Marchand;Marcelle;
+Juhel;Claudine;16/02/1947;Vimoutiers;Orne;;;;;;;;;;;
+Duvallet;Claude;31/07/1973;Evreux;Eure;;;;;;;Duvallet;Christian;Juhel;Claudine;
+Duvallet;André;;;;;;;;;;;;;;
+Marchand;Marcelle;;;;;;;;;;;;;;
