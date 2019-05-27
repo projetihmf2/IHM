@@ -22,6 +22,7 @@ public class NouvelleFiche extends JDialog implements ActionListener
   public NouvelleFiche(PanelPrincipal panelInfosPrincipal)
   {
     super(panelInfosPrincipal, "Nouvelle Fiche", true);
+    this.panelPrincipal=panelInfosPrincipal;
     this.setResizable(false);
     this.setSize(500,400);
 
@@ -72,7 +73,7 @@ public class NouvelleFiche extends JDialog implements ActionListener
     else
     {
       FicheGenealogique nouvelleFiche = new FicheGenealogique(this.tabText[0].getText(), this.tabText[1].getText(), this.tabText[2].getText(),this.tabText[3].getText(), this.tabText[4].getText());
-      this.panelPrincipal.ajouterFiche(nouvelleFiche);
+      if(nouvelleFiche != null)this.panelPrincipal.ajouterFiche(nouvelleFiche);
     }
   }
 
