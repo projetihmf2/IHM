@@ -3,6 +3,7 @@ import javax.swing.*;
 import java.awt.event.*;
 import java.awt.FileDialog;
 import javax.swing.filechooser.*;
+import java.util.*;
 /*----------------------------------------------------------*/
 /*CLASSE QUI CREE LE MENU PRINCIPAL ET GERE C'EST EVENEMENT'*/
 /*----------------------------------------------------------*/
@@ -41,7 +42,7 @@ public class BarreDeMenu extends JMenuBar implements ActionListener
 	{
 		//init
 		this.menubMaBarre = new JMenuBar();
-		this.panelPrincipal=panelPrincipal;
+		this.panelPrincipal = panelPrincipal;
 		//menu FICHIER
 		this.menuFichier         = new JMenu("Fichier");
 		this.itemNouveau         = this.creeItem(this.menuFichier,"Nouveau",true);
@@ -177,8 +178,21 @@ public class BarreDeMenu extends JMenuBar implements ActionListener
 	}
 	private void Supprimer()
 	{
-		Object[] choix = {"ham", "spam", "yam"};
-		String s = (String)JOptionPane.showInputDialog(null,"Fiche à supprimer : ", "Supprimer", JOptionPane.PLAIN_MESSAGE, null, choix,"");
+		if(this.panelPrincipal.getFichier() == null)
+		{
+			JOptionPane.showMessageDialog(null,"Il n'y a pas de fiches", "Supprimer", JOptionPane.WARNING_MESSAGE);
+		}
+		else
+		{
+			ArrayList<FicheGenealogique> liste = this.panelPrincipal.getFichier().getListeFiches();
+			System.out.println(liste);
+			Object[] choix = new Object[liste.size()];
+			for(int i = 0; i < liste.size(); i++)
+			{
+				choix[i] = liste.get(i);
+			}
+			String s = (String)JOptionPane.showInputDialog(null,"Fiche à supprimer : ", "Supprimer", JOptionPane.PLAIN_MESSAGE, null, choix,"");
+		}
 	}
 	private void Modifier()
 	{
