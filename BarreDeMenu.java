@@ -114,9 +114,10 @@ public class BarreDeMenu extends JMenuBar implements ActionListener
 	}
 
 	//MENU FICHIER
-	private void nouveau()
+	public void nouveau()
 	{
 		this.panelPrincipal.setFichier(new FichierGenealogique());
+		this.panelPrincipal.setTitle("Nouvel Arbre généalogique");
 	}
 
 	private void Enrengister()
@@ -167,6 +168,7 @@ public class BarreDeMenu extends JMenuBar implements ActionListener
 			// previent que le fichier a été charger , facilite l'enregistrer
 			this.panelPrincipal.getFichier().setCharger(true);
 		}
+		this.panelPrincipal.setTitle(this.choix.getSelectedFile().getName());
 
 	}
 

@@ -27,6 +27,8 @@ public class PanelPrincipal extends JFrame
 
     this.setVisible(true);
     this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    //init le un nouveau doccument au lancement
+    this.menu.nouveau();
   }
   
 

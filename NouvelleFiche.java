@@ -99,7 +99,7 @@ public class NouvelleFiche extends JDialog implements ActionListener
     }
     if(e.getSource() == this.annuler)
     {
-      this.dispose();
+		this.dispose();
     }
   }
 }
