@@ -20,7 +20,7 @@ class SelectionFiche extends JPanel implements ActionListener {
     public SelectionFiche() {
 
         this.setLayout(new FlowLayout());
-        this.setBackground(Color.GRAY);
+        //this.setBackground(Color.GRAY);
         this.setPreferredSize(new Dimension(125, 10));
         this.font = new Font("Courier", Font.PLAIN, 14);
         this.setFont(this.font);
