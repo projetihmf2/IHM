@@ -37,6 +37,7 @@ public class BarreDeMenu extends JMenuBar implements ActionListener
 	private FileNameExtensionFilter filter;
 	//principal
 	private PanelPrincipal panelPrincipal ;
+	private boolean        anulerModif;
 
 	public BarreDeMenu(PanelPrincipal panelPrincipal)
 	{
@@ -189,6 +190,7 @@ public class BarreDeMenu extends JMenuBar implements ActionListener
 			new NouvelleFiche(this.panelPrincipal);
 			this.panelPrincipal.getSelectionFiche().maj();
 		}
+		this.panelPrincipal.getSelectionFiche().maj();
 	}
 	private void Supprimer()
 	{
@@ -199,19 +201,57 @@ public class BarreDeMenu extends JMenuBar implements ActionListener
 		else
 		{
 			ArrayList<FicheGenealogique> liste = this.panelPrincipal.getFichier().getListeFiches();
-			System.out.println(liste);
 			Object[] choix = new Object[liste.size()];
 			for(int i = 0; i < liste.size(); i++)
 			{
-				choix[i] = liste.get(i);
+				choix[i] = liste.get(i).getNom() + " " + liste.get(i).getPrenom();
 			}
-			String s = (String)JOptionPane.showInputDialog(null,"Fiche à supprimer : ", "Supprimer", JOptionPane.PLAIN_MESSAGE, null, choix,"");
-
+			if(choix.length == 0) { JOptionPane.showMessageDialog(null,"Il n'y a pas de fiches", "Supprimer", JOptionPane.WARNING_MESSAGE); }
+			else
+			{
+				String s = (String)JOptionPane.showInputDialog(null,"Fiche à supprimer : ", "Supprimer", JOptionPane.PLAIN_MESSAGE, null, choix,"");
+				for(int i = 0; i < choix.length; i++)
+				{
+					if(s != null && s.equals(liste.get(i).getNom() + " " + liste.get(i).getPrenom()))
+					{
+						this.panelPrincipal.getFichier().supprimerFiche(i);
+						this.panelPrincipal.getSelectionFiche().maj();
+					}
+				}
+			}
 		}
+		this.panelPrincipal.getSelectionFiche().maj();
 }
 	private void Modifier()
 	{
-		System.out.println("this.itemModifier");
+		if(this.panelPrincipal.getFichier() == null)
+		{
+			JOptionPane.showMessageDialog(null,"Il n'y a pas de fiches", "Modifier", JOptionPane.WARNING_MESSAGE);
+		}
+		else
+		{
+			ArrayList<FicheGenealogique> liste = this.panelPrincipal.getFichier().getListeFiches();
+			Object[] choix = new Object[liste.size()];
+			for(int i = 0; i < liste.size(); i++)
+			{
+				choix[i] = liste.get(i).getNom() + " " + liste.get(i).getPrenom();
+			}
+			if(choix.length == 0) { JOptionPane.showMessageDialog(null,"Il n'y a pas de fiches", "Modifer", JOptionPane.WARNING_MESSAGE); }
+			else
+			{
+				String s = (String)JOptionPane.showInputDialog(null,"Fiche à modifier : ", "Modifier", JOptionPane.PLAIN_MESSAGE, null, choix,"");
+				for(int i = 0; i < choix.length; i++)
+				{
+					if(s != null && s.equals(liste.get(i).getNom() + " " + liste.get(i).getPrenom()))
+					{
+						FicheGenealogique ficheActuelle = this.panelPrincipal.getFichier().contains(liste.get(i));
+						new NouvelleFiche(ficheActuelle, this.panelPrincipal, i);
+						this.panelPrincipal.getSelectionFiche().maj();
+					}
+				}
+			}
+		}
+		this.panelPrincipal.getSelectionFiche().maj();
 	}
 	// MENU OUTILS
 	private void Agrandir()
@@ -233,7 +273,8 @@ public class BarreDeMenu extends JMenuBar implements ActionListener
 	// MENU A PROPOS
 	private void aPropos()
 	{
-		JOptionPane.showMessageDialog(null, "Logiciel d'arbre généalogique créeer par Romain Loisel et ... \n\nIUT Informatique Groupe F2", "A propos", JOptionPane.INFORMATION_MESSAGE);
+		String message = "Logiciel d'arbre généalogique créé par ";
+		message += "Romain Loisel, Arthur Baradel \net Raphaël Lefevre \n\nIUT Informatique Groupe F2 - Le Havre";
+		JOptionPane.showMessageDialog(null, message, "A propos", JOptionPane.INFORMATION_MESSAGE);
 	}
-
 }

@@ -1,8 +1,4 @@
-import java.awt.Button;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.Font;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -13,16 +9,17 @@ import javax.swing.JPanel;
 class SelectionFiche extends JPanel implements ActionListener {
 
     private FichierGenealogique genealogique;
-
     private ArrayList<JButton> tabButtons;
     private Font font;
+    private int  largeur;
 
-    public SelectionFiche() {
-
+    public SelectionFiche(int largeur)
+    {
+        //this.largeur = (int)(largeur *0.1);
         this.setLayout(new FlowLayout());
-        //this.setBackground(Color.GRAY);
-        this.setPreferredSize(new Dimension(125, 10));
-        this.font = new Font("Courier", Font.PLAIN, 14);
+        this.setBackground(Color.GRAY);
+        this.setPreferredSize(new Dimension(150, 10));
+        this.font = new Font("Roboto", Font.PLAIN, 14);
         this.setFont(this.font);
 
         this.tabButtons = new ArrayList<JButton>();
@@ -49,13 +46,14 @@ class SelectionFiche extends JPanel implements ActionListener {
 
         for (FicheGenealogique f : genealogique.getListeFiches()) {
 
-            this.tabButtons.add(new JButton(String.format("%-10s", f.getNom())));
+            this.tabButtons.add(new JButton("<html><b>" + f.getNom() + "<b/><br />" + f.getPrenom() + "<p/><html/>"));
         }
 
         for (JButton but : this.tabButtons) {
             this.add(but);
             but.setFont(this.font);
             but.addActionListener(this);
+            but.setPreferredSize(new Dimension(150,40));
         }
         this.updateUI();
     }

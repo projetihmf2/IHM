@@ -19,7 +19,7 @@ public class BarreDOutil extends JPanel
     this.imgZoom      = Toolkit.getDefaultToolkit().getImage("Image/add-searching.png");
     this.imgDeZoom    = Toolkit.getDefaultToolkit().getImage("Image/delete-searching.png");
     this.imgDescendre = Toolkit.getDefaultToolkit().getImage("Image/arrow-down.png");
-    this.imgMonter = Toolkit.getDefaultToolkit().getImage("Image/arrow-up.png");
+    this.imgMonter    = Toolkit.getDefaultToolkit().getImage("Image/arrow-up.png");
 
     this.zoom      = new JLabel(new ImageIcon(this.imgZoom));
     this.deZoom    = new JLabel(new ImageIcon(this.imgDeZoom));

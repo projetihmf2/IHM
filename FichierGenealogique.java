@@ -3,7 +3,7 @@ import java.util.ArrayList;
 
 /**
  * Classe permettant de manipuler la liste des fiches gÃ©nÃ©alogiques et de les charger ou enregistrer
- * dans un fichier texte. 
+ * dans un fichier texte.
  * @author Claude.Duvallet@gmail.com
  *
  */
@@ -12,16 +12,16 @@ public class FichierGenealogique {
 	private ArrayList<FicheGenealogique> listeFiches;
 	//si le fichier a été charger.
 	private boolean charger ;
-	
+
 	/**
 	 * Constructeur par dÃ©faut.
 	 */
 	public FichierGenealogique (){
 		listeFiches = new ArrayList<FicheGenealogique>();
 	}
-	
-	/** 
-	 * MÃ©thode permettant de tester si une fiche gÃ©nÃ©alogique existe dÃ©jÃ 
+
+	/**
+	 * MÃ©thode permettant de tester si une fiche gÃ©nÃ©alogique existe dÃ©jÃ
 	 * @param fiche la fiche gÃ©nÃ©alogique Ã  recherche.
 	 * @return la fiche si elle existe sinon null.
 	 */
@@ -37,7 +37,7 @@ public class FichierGenealogique {
 		}
 		return null;
 	}
-	
+
 	/**
 	 * Cette mÃ©thode permet d'ajouter une nouvelle fiche gÃ©nÃ©alogique si elle n'existe pas.
 	 * @param fiche la nouvelle fiche Ã  ajouter.
@@ -95,16 +95,16 @@ public class FichierGenealogique {
 		if (fiche.getPere()!=null)
 			while (compteur<nombreDeFiches){
 				ficheResultat=(FicheGenealogique)listeFiches.get(compteur);
-				if ((ficheResultat.getNom().equals(fiche.getPere().getNom())) && 
+				if ((ficheResultat.getNom().equals(fiche.getPere().getNom())) &&
 						(ficheResultat.getPrenom().equals(fiche.getPere().getPrenom()))){
 					return ficheResultat;
 				}
 				compteur++;
 			}
-		
+
 		return null;
 	}
-	
+
 	/**
 	 * MÃ©thode permettant de retrouver la fiche gÃ©nÃ©alogique d'un mÃ¨re
 	 * @param fiche celle dont on cherche la mÃ¨re.
@@ -117,17 +117,17 @@ public class FichierGenealogique {
 		if (fiche.getMere()!=null)
 			while (compteur<nombreDeFiches){
 				ficheResultat=(FicheGenealogique)listeFiches.get(compteur);
-				
-				if ((ficheResultat.getNom().equals(fiche.getMere().getNom())) 
+
+				if ((ficheResultat.getNom().equals(fiche.getMere().getNom()))
 						&& (ficheResultat.getPrenom().equals(fiche.getMere().getPrenom()))){
 					return ficheResultat;
 				}
 				compteur++;
 			}
-		
+
 		return null;
 	}
-	
+
 	/**
 	 * Lecture des fiches gÃ©nÃ©alogiques Ã  partir d'un fichier.
 	 * @param nomDuFichier nom du fichier contenant les fiches.
@@ -160,18 +160,18 @@ public class FichierGenealogique {
 			if (ficheResultat!=null)
 				fg.setPere(ficheResultat);
 			else fg.setPere(null);
-			
+
 			ficheResultat = getMere(fg);
-			if (ficheResultat!=null) 
+			if (ficheResultat!=null)
 				fg.setMere(ficheResultat);
 			else fg.setMere(null);
-			
+
 			compteur++;
 		}
 		System.out.println("fichier charger "+nomDuFichier);
-		
+
 	}
-	
+
 	/**
 	 * MÃ©thode permettant d'enregistrer toutes les fiches gÃ©nÃ©alogiques dans un fichier texte.
 	 * @param nomDuFichier le nom du fichier Ã  enregistrer
@@ -199,10 +199,10 @@ public class FichierGenealogique {
 			System.out.println("ProblÃ¨me d'Ã©criture dans le fichier "+nomDuFichier);
 		}
 	}
-	
+
 	/**
 	 * MÃ©thode permettant de rÃ©cupÃ©rer les informations situÃ©es dans les lignes du fichier texte.
-	 * Chaque ligne possÃ¨de toutes les informations d'une fiche gÃ©nÃ©alogique. 
+	 * Chaque ligne possÃ¨de toutes les informations d'une fiche gÃ©nÃ©alogique.
 	 * @param text la ligne de texte Ã  traiter.
 	 */
 	private void traiterLigne(String text) {
@@ -221,11 +221,11 @@ public class FichierGenealogique {
 
 		FicheGenealogique ficheResultat;
 		ficheResultat = getPere(ficheGenealogique.getPere());
-		if (ficheResultat!=null) 
+		if (ficheResultat!=null)
 			ficheGenealogique.setPere(ficheResultat);
 
 		ficheResultat = getPere(ficheGenealogique.getMere());
-		if (ficheResultat!=null) 
+		if (ficheResultat!=null)
 			ficheGenealogique.setMere(ficheResultat);
 		//System.out.println(ficheGenealogique);
 		listeFiches.add(ficheGenealogique);
@@ -238,13 +238,18 @@ public class FichierGenealogique {
 		return listeFiches;
 	}
 
+	public void supprimerFiche(int i)
+	{
+		this.listeFiches.remove(i);
+	}
+
 	/**
 	 * @param listeFiches la nouvelle liste de fiches Ã  dÃ©finir.
 	 */
 	public void setListeFiches(ArrayList<FicheGenealogique> listeFiches) {
 		this.listeFiches = listeFiches;
 	}
-	
+
 	public boolean getCharger()
 	{
 		return this.charger;
@@ -253,5 +258,5 @@ public class FichierGenealogique {
 	{
 		this.charger=b;
 	}
-	
+
 }
