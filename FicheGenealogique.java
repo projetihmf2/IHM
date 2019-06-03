@@ -2,6 +2,7 @@
  * Cette classe permet de reprÃ©senter la fiche gÃ©nÃ©alogique d'une personne
  * @author Claude.Duvallet@gmail.com
  */
+import javax.swing.*;
 public class FicheGenealogique {
 
 	private String nom;
@@ -17,6 +18,8 @@ public class FicheGenealogique {
 	private String deptDeDeces;
 	private FicheGenealogique pere;
 	private FicheGenealogique mere;
+	//possede son bouton d'affichage
+	private JButton btnFiche;
 	
 	/**
 	 * Constructeur par dÃ©faut
@@ -45,6 +48,14 @@ public class FicheGenealogique {
 		this.villeDeNaissance = villeDeNaissance;
 		this.deptDeNaissance = deptDeNaissance;
 	}
+	//bouton
+	public JButton getBouton() {
+		return this.btnFiche ;
+	}
+	public void setButton(JButton btn){
+		this.btnFiche=btn ;
+	}
+	//
 
 	/**
 	 * @return le nom de la personne

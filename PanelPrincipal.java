@@ -21,7 +21,7 @@ public class PanelPrincipal extends JFrame
 
     this.outils = new BarreDOutil(this.menu);
     this.add(this.outils,BorderLayout.NORTH);
-    this.fiche = new SelectionFiche(this.getWidth());
+    this.fiche = new SelectionFiche(this,this.getWidth());
     this.add(this.fiche,"West");
 
     this.setVisible(true);
@@ -34,7 +34,11 @@ public class PanelPrincipal extends JFrame
 	public void ajouterFiche(FicheGenealogique fiche)
 	{
 		if(this.fiche.getGenealogique() != null )this.fiche.getGenealogique().addFicheGenealogique(fiche);
-    this.getSelectionFiche().maj();
+    	this.getSelectionFiche().maj();
+	}
+	public void nouveau(FicheGenealogique fiche)
+	{
+	
 	}
 	public void setFichier(FichierGenealogique fichier)
 	{
