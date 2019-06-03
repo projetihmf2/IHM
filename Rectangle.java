@@ -4,22 +4,27 @@ import java.awt.Graphics;
 
 import javax.swing.*;
 
-class Rectangle extends JPanel {
+public class Rectangle
+{
     private int posX;
     private int posY;
-    private int largeur;
-    private int longeur;
+    private static int largeur = 125;
+    private static int longeur = 80;
+    private static final int decalage = 25;
+    private FicheGenealogique fiche;
 
-    public Rectangle(int posX, int posY, int largeur, int longeur) {
+    public Rectangle(int posX, int posY, FicheGenealogique fiche)
+    {
         this.posX = posX;
         this.posY = posY;
-        this.largeur = largeur;
-        this.longeur = longeur;
+        this.fiche = fiche;
     }
 
-    public void paint(Graphics g) {
+    public void paint(Graphics g)
+    {
         g.setColor(Color.BLACK);
-        g.drawRect(this.posX, this.posY, this.largeur, this.longeur);
+        g.drawRect(this.posX, this.posY, Rectangle.longeur, Rectangle.largeur);
+        g.drawString("Arthur  Baradel", posX + Rectangle.decalage, posY + Rectangle.decalage);
 
         System.out.println("TEST");
     }

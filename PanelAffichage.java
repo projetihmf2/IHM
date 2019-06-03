@@ -4,21 +4,25 @@ import java.util.ArrayList;
 import javax.swing.*;
 
 class PanelAffichage extends JPanel {
-    private ArrayList<Rectangle> tabRect;
+
+    private FicheGenealogique fiche;
+    private Rectangle rectangleSelection;
 
     public PanelAffichage() {
-        this.tabRect = new ArrayList<Rectangle>();
-        // this.setLayout(new GridLayout(4, 3, 10, 10));
-        for (int i = 0; i < 5; i++) {
-            this.tabRect.add(new Rectangle(10 * i, 20 * i, 150, 100));
-        }
-
         this.setVisible(true);
     }
 
     public void paint(Graphics g) {
-        for (Rectangle rec : this.tabRect) {
-            rec.paint(g);
-        }
+        //this.rec.paint(g);
+    }
+
+    public void nouveau(FicheGenealogique fiche) {
+        //this.clear();
+        this.fiche = fiche;
+
+      //  this.rectangleSelection = new Rectangle(0, 0, fiche);
+
+        // this.add();
+
     }
 }
