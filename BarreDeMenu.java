@@ -47,8 +47,8 @@ public class BarreDeMenu extends JMenuBar implements ActionListener
 		//menu FICHIER
 		this.menuFichier         = new JMenu("Fichier");
 		this.itemNouveau         = this.creeItem(this.menuFichier,"Nouveau",true);
-		this.itemEnrengister     = this.creeItem(this.menuFichier,"Enrengister",true);
-		this.itemEnrengisterSous = this.creeItem(this.menuFichier,"Enrengister Sous",true);
+		this.itemEnrengister     = this.creeItem(this.menuFichier,"Enregister",true);
+		this.itemEnrengisterSous = this.creeItem(this.menuFichier,"Enregister Sous",true);
 		this.itemCharger         = this.creeItem(this.menuFichier,"Charger",true);
 		this.itemQuitter         = this.creeItem(this.menuFichier,"Quitter",false);
 		menubMaBarre.add(menuFichier);
@@ -121,7 +121,7 @@ public class BarreDeMenu extends JMenuBar implements ActionListener
 		this.panelPrincipal.setTitle("Nouvel Arbre généalogique");
 	}
 
-	private void Enrengister()
+	public void Enrengister()
 	{
 		//si le fichier a été charger
 		 if(this.panelPrincipal.getFichier().getCharger())
@@ -134,7 +134,7 @@ public class BarreDeMenu extends JMenuBar implements ActionListener
 		 }
 	}
 
-	private void EnrengisterSous()
+	public void EnrengisterSous()
 	{
 		// parent component of the dialog
 		JFrame parentFrame = new JFrame();
@@ -153,24 +153,26 @@ public class BarreDeMenu extends JMenuBar implements ActionListener
 
 	}
 
-	private void Charger()
+	public void Charger()
 	{
 		FichierGenealogique fichier = new FichierGenealogique();
 		//ouvre la boite de dial
 		this.choix.showOpenDialog(this);
 		//prend le chemin absolue
-		String chemin = this.choix.getSelectedFile().getAbsolutePath();
-		if(chemin != null )
+		if(this.choix.getSelectedFile() != null) //permet de controler si l'utilisateur anule
 		{
-			//charge
-			fichier.chargerFichier(this.choix.getSelectedFile().getAbsolutePath());
-			//modifie la selection
-			this.panelPrincipal.setFichier(fichier);
-			// previent que le fichier a été charger , facilite l'enregistrer
-			this.panelPrincipal.getFichier().setCharger(true);
+			String chemin = this.choix.getSelectedFile().getAbsolutePath();
+			if(chemin != null )
+			{
+				//charge
+				fichier.chargerFichier(this.choix.getSelectedFile().getAbsolutePath());
+				//modifie la selection
+				this.panelPrincipal.setFichier(fichier);
+				// previent que le fichier a été charger , facilite l'enregistrer
+				this.panelPrincipal.getFichier().setCharger(true);
+			}
+			this.panelPrincipal.setTitle(this.choix.getSelectedFile().getName());
 		}
-		this.panelPrincipal.setTitle(this.choix.getSelectedFile().getName());
-
 	}
 
 	private void Quitter()
@@ -179,7 +181,7 @@ public class BarreDeMenu extends JMenuBar implements ActionListener
 	}
 
 	// MENU FICHE
-	private void Ajouter()
+	public void Ajouter()
 	{
 		if(this.panelPrincipal.getFichier() == null)
 		{
@@ -192,7 +194,7 @@ public class BarreDeMenu extends JMenuBar implements ActionListener
 		}
 		this.panelPrincipal.getSelectionFiche().maj();
 	}
-	private void Supprimer()
+	public void Supprimer()
 	{
 		if(this.panelPrincipal.getFichier() == null)
 		{
@@ -216,13 +218,14 @@ public class BarreDeMenu extends JMenuBar implements ActionListener
 					{
 						this.panelPrincipal.getFichier().supprimerFiche(i);
 						this.panelPrincipal.getSelectionFiche().maj();
+						break; //Sort de la boucle car la taille diminue de 1 et la tache a été effectuée
 					}
 				}
 			}
 		}
 		this.panelPrincipal.getSelectionFiche().maj();
 }
-	private void Modifier()
+	public void Modifier()
 	{
 		if(this.panelPrincipal.getFichier() == null)
 		{
@@ -254,24 +257,24 @@ public class BarreDeMenu extends JMenuBar implements ActionListener
 		this.panelPrincipal.getSelectionFiche().maj();
 	}
 	// MENU OUTILS
-	private void Agrandir()
+	public void Agrandir()
 	{
 		System.out.println("this.itemAgrandir");
 	}
-	private void Reduire()
+	public void Reduire()
 	{
 		System.out.println("this.itemReduire");
 	}
-	private void Augmenter()
+	public void Augmenter()
 	{
 		System.out.println("this.itemAugmenter");
 	}
-	private void Diminuer()
+	public void Diminuer()
 	{
 		System.out.println("this.itemDiminuer");
 	}
 	// MENU A PROPOS
-	private void aPropos()
+	public void aPropos()
 	{
 		String message = "Logiciel d'arbre généalogique créé par ";
 		message += "Romain Loisel, Arthur Baradel \net Raphaël Lefevre \n\nIUT Informatique Groupe F2 - Le Havre";

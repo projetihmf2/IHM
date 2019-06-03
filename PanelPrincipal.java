@@ -19,7 +19,7 @@ public class PanelPrincipal extends JFrame
     this.menu = new BarreDeMenu(this);
     this.setJMenuBar(this.menu);
 
-    this.outils = new BarreDOutil();
+    this.outils = new BarreDOutil(this.menu);
     this.add(this.outils,BorderLayout.NORTH);
     this.fiche = new SelectionFiche(this.getWidth());
     this.add(this.fiche,"West");
