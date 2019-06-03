@@ -9,20 +9,18 @@ import javax.swing.JPanel;
 class SelectionFiche extends JPanel implements ActionListener {
 
     private FichierGenealogique genealogique;
-    private ArrayList<JButton> tabButtons;
+    private PanelPrincipal panelPrincipal ;
     private Font font;
     private int  largeur;
 
-    public SelectionFiche(int largeur)
-    {
+    public SelectionFiche(PanelPrincipal panelPrincipal , int largeur) {
         //this.largeur = (int)(largeur *0.1);
+        this.panelPrincipal=panelPrincipal;
         this.setLayout(new FlowLayout());
         this.setBackground(Color.GRAY);
         this.setPreferredSize(new Dimension(150, 10));
         this.font = new Font("Roboto", Font.PLAIN, 14);
         this.setFont(this.font);
-
-        this.tabButtons = new ArrayList<JButton>();
 
     }
 
@@ -38,28 +36,23 @@ class SelectionFiche extends JPanel implements ActionListener {
     }
 
     public void maj() {
-
-        for (JButton but : this.tabButtons) {
-            this.remove(but);
-        }
-        this.tabButtons.clear();
-
+		this.removeAll();
         for (FicheGenealogique f : genealogique.getListeFiches()) {
-
-            this.tabButtons.add(new JButton("<html><b>" + f.getNom() + "<b/><br />" + f.getPrenom() + "<p/><html/>"));
-        }
-
-        for (JButton but : this.tabButtons) {
-            this.add(but);
-            but.setFont(this.font);
-            but.addActionListener(this);
-            but.setPreferredSize(new Dimension(150,40));
+			f.setButton(new JButton("<html><b>" + f.getNom() + "<b/><br />" + f.getPrenom() + "<p/><html/>"));
+			this.add(f.getBouton());
+			f.getBouton().setFont(this.font);
+			f.getBouton().addActionListener(this);
+			f.getBouton().setPreferredSize(new Dimension(150,40));
         }
         this.updateUI();
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-
+    	for (FicheGenealogique fiche : genealogique.getListeFiches()) {
+    		if(fiche != null && e.getSource() == fiche.getBouton()){
+    			this.panelPrincipal.nouveau(fiche);
+    		}
+    	}
     }
 }
