@@ -4,53 +4,53 @@ import java.awt.event.*;
 import java.awt.event.ActionEvent;
 import javax.swing.*;
 
-public class PanelPrincipal extends JFrame
-{
-  private BarreDeMenu    menu;
-  private BarreDOutil    outils;
-  private SelectionFiche fiche ;
+public class PanelPrincipal extends JFrame {
+	private BarreDeMenu menu;
+	private BarreDOutil outils;
+	private SelectionFiche fiche;
+	private PanelAffichage affichage;
 
-  public PanelPrincipal()
-  {
-    this.setTitle("Arbre généalogique");
-    this.setSize(1000,800);
-    this.setLocation(50,100);
+	public PanelPrincipal() {
+		this.setTitle("Arbre généalogique");
+		this.setSize(1000, 800);
+		this.setLocation(50, 100);
 
-    this.menu = new BarreDeMenu(this);
-    this.setJMenuBar(this.menu);
+		this.menu = new BarreDeMenu(this);
+		this.setJMenuBar(this.menu);
 
-    this.outils = new BarreDOutil(this.menu);
-    this.add(this.outils,BorderLayout.NORTH);
-    this.fiche = new SelectionFiche(this,this.getWidth());
-    this.add(this.fiche,"West");
+		this.outils = new BarreDOutil();
+		this.add(this.outils, BorderLayout.NORTH);
+		this.fiche = new SelectionFiche(this.getWidth());
+		this.add(this.fiche, "West");
 
-    this.setVisible(true);
-    this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    //init le un nouveau doccument au lancement
-    this.menu.nouveau();
-  }
+		this.affichage = new PanelAffichage();
+		this.add(this.affichage, "Center");
 
-
-	public void ajouterFiche(FicheGenealogique fiche)
-	{
-		if(this.fiche.getGenealogique() != null )this.fiche.getGenealogique().addFicheGenealogique(fiche);
-    	this.getSelectionFiche().maj();
+		this.setVisible(true);
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		// init le un nouveau doccument au lancement
+		this.menu.nouveau();
 	}
-	public void nouveau(FicheGenealogique fiche)
-	{
-	
+
+	public void ajouterFiche(FicheGenealogique fiche) {
+		if (this.fiche.getGenealogique() != null)
+			this.fiche.getGenealogique().addFicheGenealogique(fiche);
+		this.getSelectionFiche().maj();
 	}
-	public void setFichier(FichierGenealogique fichier)
-	{
+
+	public void nouveau(FicheGenealogique fiche) {
+		this.affichage.nouveau(fiche);
+	}
+
+	public void setFichier(FichierGenealogique fichier) {
 		this.fiche.setGenealogique(fichier);
 	}
 
-	public FichierGenealogique getFichier()
-	{
+	public FichierGenealogique getFichier() {
 		return this.fiche.getGenealogique();
 	}
-	public SelectionFiche getSelectionFiche()
-	{
+
+	public SelectionFiche getSelectionFiche() {
 		return this.fiche;
 	}
 }
