@@ -23,8 +23,12 @@ public class Rectangle {
 
             g.setColor(Color.BLACK);
             g.drawRect(this.posX, this.posY, Rectangle.longeur, Rectangle.largeur);
-            g.drawString(fiche.getNom() + "\\" + fiche.getPrenom(), posX + Rectangle.decalage,
+            g.drawString(fiche.getNom(), this.posX + Rectangle.decalage,
                     posY + Rectangle.decalage);
+            g.drawString(fiche.getPrenom(),this.posX + Rectangle.decalage,this.posY+ Rectangle.decalage*2);
+            g.drawString(fiche.getDateDeNaissance(),this.posX + Rectangle.decalage,this.posY+ Rectangle.decalage*3);
+            
+            
         }
 
     }
