@@ -20,7 +20,7 @@ public class FicheGenealogique {
 	private FicheGenealogique mere;
 	//possede son bouton d'affichage
 	private JButton btnFiche;
-	
+
 	/**
 	 * Constructeur par dÃ©faut
 	 * @param nom le nom de personne
@@ -40,7 +40,7 @@ public class FicheGenealogique {
 	 * @param villeDeNaissance la ville de naissance
 	 * @param deptDeNaissance le dÃ©partement de naissance
 	 */
-	public FicheGenealogique(String nom, String prenom, String dateDeNaissance, 
+	public FicheGenealogique(String nom, String prenom, String dateDeNaissance,
 							 String villeDeNaissance, String deptDeNaissance) {
 		this.nom = nom;
 		this.prenom = prenom;
@@ -238,9 +238,9 @@ public class FicheGenealogique {
 	public void setMere(FicheGenealogique mere) {
 		this.mere = mere;
 	}
-	
+
 	/**
-	 * MÃ©thode permettant de comparer la fiche gÃ©nÃ©alogique courante 
+	 * MÃ©thode permettant de comparer la fiche gÃ©nÃ©alogique courante
 	 * avec une autre fiche afin de vÃ©rifier que les deux fiches sont identiques.
 	 * @param ficheGenealogique la fiche gÃ©nÃ©alogique avec laquelle on compare la fiche courante
 	 * @return un boolÃ©en reprÃ©sentant le rÃ©sultat de la comparaison
@@ -252,10 +252,10 @@ public class FicheGenealogique {
 			if (!dateDeNaissance.equals(ficheGenealogique.getDateDeNaissance())) return false;
 		return true;
 	}
-	
+
 
 	/**
-	 * Methode permettant de convertir une fiche gÃ©nÃ©alogique 
+	 * Methode permettant de convertir une fiche gÃ©nÃ©alogique
 	 * en une chaine de caractÃ¨res prÃªte Ã  Ãªtre enregistrÃ©e dans un fichier texte.
 	 * @return une chaine de caractÃ¨res
 	 */
@@ -307,14 +307,14 @@ public class FicheGenealogique {
 		resultat+="\n";
 		return resultat;
 	}
-	
+
 	/**
-	 * MÃ©thode permettant de reprÃ©senter la fiche gÃ©nÃ©alogique sous forme d'une chaine de caractÃ¨res. 
+	 * MÃ©thode permettant de reprÃ©senter la fiche gÃ©nÃ©alogique sous forme d'une chaine de caractÃ¨res.
 	 * @see java.lang.Object#toString()
 	 */
 	@Override
 	public String toString() {
-		String resultat= "Personne [nom=" + nom + ", prenom=" + prenom + ",\n  dateDeNaissance=" + dateDeNaissance + ", villeDeNaissance="+ villeDeNaissance + ", deptDeNaissance=" + deptDeNaissance 
+		String resultat= "Personne [nom=" + nom + ", prenom=" + prenom + ",\n  dateDeNaissance=" + dateDeNaissance + ", villeDeNaissance="+ villeDeNaissance + ", deptDeNaissance=" + deptDeNaissance
 				+ ",\n  dateDeMariage=" + dateDeMariage  + ", villeDeMariage="+ villeDeMariage + ", deptDeMariage=" + deptDeMariage
 				+ ",\n  dateDeDeces=" + dateDeDeces+ ", villeDeDeces=" + villeDeDeces + ", deptDeDeces=" + deptDeDeces;
 		if (pere!=null){
@@ -331,9 +331,9 @@ public class FicheGenealogique {
 			if (mere.getPrenom()!=null)
 				resultat+= mere.getPrenom();
 		}
-		
+
 		resultat+="\n]";
-		
+
 		return resultat;
 	}
 }

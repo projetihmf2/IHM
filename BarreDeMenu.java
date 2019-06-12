@@ -126,7 +126,11 @@ public class BarreDeMenu extends JMenuBar implements ActionListener
 		//si le fichier a été charger
 		 if(this.panelPrincipal.getFichier().getCharger())
 		 {
-		 	this.panelPrincipal.getFichier().enregistrerFichier(this.choix.getSelectedFile().getAbsolutePath()) ;
+			int rep = JOptionPane.showConfirmDialog(null,"Etes vous sûr de vouloir enregistrer", "Enregister", JOptionPane.YES_NO_OPTION);
+			if(rep == JOptionPane.YES_OPTION)
+			{
+				this.panelPrincipal.getFichier().enregistrerFichier(this.choix.getSelectedFile().getAbsolutePath()) ;
+			}
 		 }
 		 else
 		 {
@@ -216,6 +220,17 @@ public class BarreDeMenu extends JMenuBar implements ActionListener
 				{
 					if(s != null && s.equals(liste.get(i).getNom() + " " + liste.get(i).getPrenom()))
 					{
+						for(FicheGenealogique fiche : this.panelPrincipal.getFichier().getListeFiches())
+						{
+							if(fiche.getPere() == this.panelPrincipal.getFichier().getListeFiches().get(i))
+							{
+								fiche.setPere(null);
+							}
+							if(fiche.getMere() == this.panelPrincipal.getFichier().getListeFiches().get(i))
+							{
+								fiche.setMere(null);
+							}
+						}
 						this.panelPrincipal.getFichier().supprimerFiche(i);
 						this.panelPrincipal.getSelectionFiche().maj();
 						break; //Sort de la boucle car la taille diminue de 1 et la tache a été effectuée

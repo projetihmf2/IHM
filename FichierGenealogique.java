@@ -242,6 +242,10 @@ public class FichierGenealogique {
 	{
 		this.listeFiches.remove(i);
 	}
+	public void supprimerFiche(FicheGenealogique fiche)
+	{
+		this.listeFiches.remove(fiche);
+	}
 
 	/**
 	 * @param listeFiches la nouvelle liste de fiches Ã  dÃ©finir.
@@ -257,6 +261,18 @@ public class FichierGenealogique {
 	public void setCharger(boolean b)
 	{
 		this.charger=b;
+	}
+
+	public FicheGenealogique rechercher(String nom, String prenom)
+	{
+		for(FicheGenealogique fiche : this.listeFiches)
+		{
+			if(fiche.getNom().equals(nom) && fiche.getPrenom().equals(prenom))
+			{
+				return fiche;
+			}
+		}
+		return null;
 	}
 
 }
