@@ -18,7 +18,7 @@ class PanelAffichage extends JPanel {
 	private int zoom;
 
 	public PanelAffichage() {
-		this.nbNiveauMax = 1;
+		this.nbNiveauMax = 3;
 		this.zoom = 1;
 		this.setVisible(true);
 	}
