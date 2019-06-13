@@ -53,4 +53,5 @@ public class PanelPrincipal extends JFrame {
 	public SelectionFiche getSelectionFiche() {
 		return this.fiche;
 	}
+
 }

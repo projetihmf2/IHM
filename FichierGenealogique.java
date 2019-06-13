@@ -240,10 +240,32 @@ public class FichierGenealogique {
 
 	public void supprimerFiche(int i)
 	{
+		for(FicheGenealogique fiche : this.listeFiches)
+		{
+			if(fiche.getPere() == this.listeFiches.get(i))
+			{
+				fiche.setPere(null);
+			}
+			if(fiche.getMere() == this.listeFiches.get(i))
+			{
+				fiche.setMere(null);
+			}
+		}
 		this.listeFiches.remove(i);
 	}
 	public void supprimerFiche(FicheGenealogique fiche)
 	{
+		for(FicheGenealogique ficheTmp : this.listeFiches)
+		{
+			if(ficheTmp.getPere() == fiche)
+			{
+				ficheTmp.setPere(null);
+			}
+			if(ficheTmp.getMere() == fiche)
+			{
+				ficheTmp.setMere(null);
+			}
+		}
 		this.listeFiches.remove(fiche);
 	}
 

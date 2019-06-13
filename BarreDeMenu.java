@@ -1,8 +1,13 @@
-import java.awt.*;
 import javax.swing.*;
+
+import java.awt.*;
+import java.awt.FileDialog;
 import java.awt.event.*;
 import java.util.*;
-import java.awt.FileDialog;
+import javax.swing.*;
+import javax.swing.JOptionPane;
+import javax.swing.filechooser.*;
+import java.util.*;
 import javax.swing.filechooser.*;
 /*----------------------------------------------------------*/
 /*CLASSE QUI CREE LE MENU PRINCIPAL ET GERE C'EST EVENEMENT'*/
@@ -104,7 +109,7 @@ public class BarreDeMenu extends JMenuBar implements ActionListener
 		if(e.getSource() == this.itemAPropos) this.aPropos();
 	}
 
-	//cree un item est l'ajoute a son pere
+	//cree un item et l'ajoute a son pere
 	private JMenuItem creeItem(JMenu pere , String nom,boolean separateur)
 	{
 		JMenuItem fils= new JMenuItem(nom);
@@ -181,65 +186,56 @@ public class BarreDeMenu extends JMenuBar implements ActionListener
 
 	private void Quitter()
 	{
+		//Demande une confirmation avant de quitter
+		int choix = JOptionPane.showConfirmDialog(null,"Etes vous sûr de vouloir quitter sans enregistrer ?", "Quitter", JOptionPane.YES_NO_OPTION);
+		if(choix == JOptionPane.YES_OPTION)
 		System.exit(0);
 	}
 
 	// MENU FICHE
 	public void Ajouter()
 	{
-		if(this.panelPrincipal.getFichier() == null)
-		{
-			JOptionPane.showMessageDialog(null,"Il n'y a aucun fichier de charger\nVeuillez en charger un ou en créer un.", "Ajouter", JOptionPane.WARNING_MESSAGE);
-		}
-		else
-		{
-			new NouvelleFiche(this.panelPrincipal);
-			this.panelPrincipal.getSelectionFiche().maj();
-		}
+		//Créer un nouveau fichier, méthode appelée au lancement
+		new NouvelleFiche(this.panelPrincipal);
 		this.panelPrincipal.getSelectionFiche().maj();
 	}
+
 	public void Supprimer()
 	{
+		//Controle si un fichier est charger ou si c'est un nouveau (Normalement c'est toujours le cas)
 		if(this.panelPrincipal.getFichier() == null)
 		{
 			JOptionPane.showMessageDialog(null,"Il n'y a pas de fiches", "Supprimer", JOptionPane.WARNING_MESSAGE);
 		}
 		else
 		{
+			//Conversion de la liste  des fiches en Object pour les manipuler avec un inputDialog
 			ArrayList<FicheGenealogique> liste = this.panelPrincipal.getFichier().getListeFiches();
 			Object[] choix = new Object[liste.size()];
 			for(int i = 0; i < liste.size(); i++)
 			{
 				choix[i] = liste.get(i).getNom() + " " + liste.get(i).getPrenom();
 			}
+			//Controle si il y a des fiches dans le fichier actuel sinon on ne peut pas supprimer de fiches
 			if(choix.length == 0) { JOptionPane.showMessageDialog(null,"Il n'y a pas de fiches", "Supprimer", JOptionPane.WARNING_MESSAGE); }
 			else
 			{
+				//Choix de la liste à supprimer
 				String s = (String)JOptionPane.showInputDialog(null,"Fiche à supprimer : ", "Supprimer", JOptionPane.PLAIN_MESSAGE, null, choix,"");
 				for(int i = 0; i < choix.length; i++)
 				{
 					if(s != null && s.equals(liste.get(i).getNom() + " " + liste.get(i).getPrenom()))
 					{
-						for(FicheGenealogique fiche : this.panelPrincipal.getFichier().getListeFiches())
-						{
-							if(fiche.getPere() == this.panelPrincipal.getFichier().getListeFiches().get(i))
-							{
-								fiche.setPere(null);
-							}
-							if(fiche.getMere() == this.panelPrincipal.getFichier().getListeFiches().get(i))
-							{
-								fiche.setMere(null);
-							}
-						}
 						this.panelPrincipal.getFichier().supprimerFiche(i);
 						this.panelPrincipal.getSelectionFiche().maj();
 						break; //Sort de la boucle car la taille diminue de 1 et la tache a été effectuée
 					}
 				}
 			}
-		}
 		this.panelPrincipal.getSelectionFiche().maj();
-}
+		}
+	}
+
 	public void Modifier()
 	{
 		if(this.panelPrincipal.getFichier() == null)
@@ -263,7 +259,7 @@ public class BarreDeMenu extends JMenuBar implements ActionListener
 					if(s != null && s.equals(liste.get(i).getNom() + " " + liste.get(i).getPrenom()))
 					{
 						FicheGenealogique ficheActuelle = this.panelPrincipal.getFichier().contains(liste.get(i));
-						new NouvelleFiche(ficheActuelle, this.panelPrincipal, i);
+						new NouvelleFiche(ficheActuelle, this.panelPrincipal);
 						this.panelPrincipal.getSelectionFiche().maj();
 					}
 				}

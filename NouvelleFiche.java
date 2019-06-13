@@ -66,11 +66,10 @@ public NouvelleFiche(PanelPrincipal panelInfosPrincipal)
   this.setVisible(true);
   this.setDefaultCloseOperation(JDialog.HIDE_ON_CLOSE);
 }
-
-public NouvelleFiche(FicheGenealogique fiche, PanelPrincipal panelInfosPrincipal, int numFiche)
+//SUpprimer peut etre le num fiche
+public NouvelleFiche(FicheGenealogique fiche, PanelPrincipal panelInfosPrincipal)
 {
   this(panelInfosPrincipal);
-  this.numFiche = numFiche;
   this.modifFiche = true;
   this.ficheEnCours = fiche;
   this.setTitle("Modifier Fiche");
