@@ -101,10 +101,10 @@ public class BarreDeMenu extends JMenuBar implements ActionListener
 		if(e.getSource() == this.itemSupprimer) this.Supprimer();
 		if(e.getSource() == this.itemModifier)  this.Modifier();
 		//menu outils
-		if(e.getSource() == this.itemAgrandir)  this.Agrandir();
-		if(e.getSource() == this.itemReduire)   this.Reduire();
-		if(e.getSource() == this.itemAugmenter) this.Augmenter();
-		if(e.getSource() == this.itemDiminuer)  this.Diminuer();
+		if(e.getSource() == this.itemAgrandir)  this.zoom();
+		if(e.getSource() == this.itemReduire)   this.deZoom();
+		if(e.getSource() == this.itemAugmenter) this.augmenter();
+		if(e.getSource() == this.itemDiminuer)  this.diminuer();
 		//menu a propos
 		if(e.getSource() == this.itemAPropos) this.aPropos();
 	}
@@ -268,21 +268,21 @@ public class BarreDeMenu extends JMenuBar implements ActionListener
 		this.panelPrincipal.getSelectionFiche().maj();
 	}
 	// MENU OUTILS
-	public void Agrandir()
+	public void zoom()
 	{
-		System.out.println("this.itemAgrandir");
+		this.panelPrincipal.getPanelAffichage().zoom();
 	}
-	public void Reduire()
+	public void deZoom()
 	{
-		System.out.println("this.itemReduire");
+		this.panelPrincipal.getPanelAffichage().deZoom();
 	}
-	public void Augmenter()
+	public void augmenter()
 	{
-		System.out.println("this.itemAugmenter");
+		this.panelPrincipal.getPanelAffichage().augmenter();
 	}
-	public void Diminuer()
+	public void diminuer()
 	{
-		System.out.println("this.itemDiminuer");
+		this.panelPrincipal.getPanelAffichage().diminuer();
 	}
 	// MENU A PROPOS
 	public void aPropos()

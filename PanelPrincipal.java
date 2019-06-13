@@ -20,7 +20,7 @@ public class PanelPrincipal extends JFrame {
 
 		this.outils = new BarreDOutil(this.menu);
 		this.add(this.outils, BorderLayout.NORTH);
-		this.fiche = new SelectionFiche(this,this.getWidth());
+		this.fiche = new SelectionFiche(this, this.getWidth());
 		this.add(this.fiche, "West");
 
 		this.affichage = new PanelAffichage();
@@ -53,5 +53,11 @@ public class PanelPrincipal extends JFrame {
 	public SelectionFiche getSelectionFiche() {
 		return this.fiche;
 	}
+
+	public PanelAffichage getPanelAffichage() {
+		return this.affichage;
+	}
+
+	
 
 }
