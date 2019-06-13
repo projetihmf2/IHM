@@ -146,13 +146,13 @@ class PanelAffichage extends JPanel {
 		this.repaint();
 	}
 
-	public void augmenter() {
+	public void monter() {
 		if (this.nbNiveau > nbNiveauMax)
 			this.nbNiveauMax++;
 		this.repaint();
 	}
 
-	public void diminuer() {
+	public void descendre() {
 		if (this.nbNiveauMax != 1)
 			this.nbNiveauMax--;
 		this.repaint();

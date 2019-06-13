@@ -61,10 +61,10 @@ public class BarreDOutil extends JPanel implements MouseListener {
 			this.menu.nouveau();
 		}
 		if (e.getSource() == this.lblCharger) {
-			this.menu.Charger();
+			this.menu.charger();
 		}
 		if (e.getSource() == this.lblSauvegarder) {
-			this.menu.Enrengister();
+			this.menu.enrengister();
 		}
 		if (e.getSource() == this.zoom) {
 			this.menu.zoom();
@@ -73,10 +73,10 @@ public class BarreDOutil extends JPanel implements MouseListener {
 			this.menu.deZoom();
 		}
 		if (e.getSource() == this.descendre) {
-			this.menu.diminuer();
+			this.menu.descendre();
 		}
 		if (e.getSource() == this.monter) {
-			this.menu.augmenter();
+			this.menu.monter();
 		}
 	}
 
