@@ -14,30 +14,17 @@ public class PanelPrincipal extends JFrame {
 		this.setTitle("Arbre généalogique");
 		this.setSize(1000, 800);
 		this.setLocation(50, 100);
-		this.setMinimumSize(new Dimension(800,500));
 
 		this.menu = new BarreDeMenu(this);
 		this.setJMenuBar(this.menu);
 
 		this.outils = new BarreDOutil(this.menu);
 		this.add(this.outils, BorderLayout.NORTH);
-		this.fiche = new SelectionFiche(this,this.getWidth());
-		//this.add(this.fiche, "West");
-
-
+		this.fiche = new SelectionFiche(this, this.getWidth());
+		this.add(this.fiche, "West");
 
 		this.affichage = new PanelAffichage();
-		//this.add(this.affichage, "Center");
-
-		JScrollPane leftScrollPane = new JScrollPane( this.fiche );
-		leftScrollPane.setPreferredSize( new Dimension( 200, 0 ) );
-		JScrollPane rightScrollPane = new JScrollPane( this.affichage );
-
-		JSplitPane splitPane = new JSplitPane(
-						JSplitPane.HORIZONTAL_SPLIT, leftScrollPane, rightScrollPane );
-		this.add( splitPane /*, BorderLayout.CENTER */ );
-		rightScrollPane.setMinimumSize(new Dimension((int)(this.getWidth()/1.5),0));
-		leftScrollPane.setMinimumSize(new Dimension(200,0));
+		this.add(this.affichage, "Center");
 
 		this.setVisible(true);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -71,6 +58,6 @@ public class PanelPrincipal extends JFrame {
 		return this.affichage;
 	}
 
-
+	
 
 }

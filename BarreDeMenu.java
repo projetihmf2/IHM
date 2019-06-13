@@ -32,8 +32,8 @@ public class BarreDeMenu extends JMenuBar implements ActionListener
 	private JMenu menuOutils;
 	private JMenuItem itemAgrandir;
 	private JMenuItem itemReduire;
-	private JMenuItem itemMonter;
-	private JMenuItem itemDescendre;
+	private JMenuItem itemAugmenter;
+	private JMenuItem itemDiminuer;
 	//element menu a propos de
 	private JMenu menuAPropos;
 	private JMenuItem itemAPropos;
@@ -67,8 +67,8 @@ public class BarreDeMenu extends JMenuBar implements ActionListener
 		this.menuOutils    = new JMenu("Outils");
 		this.itemAgrandir  = this.creeItem(this.menuOutils,"Agrandir",true);
 		this.itemReduire   = this.creeItem(this.menuOutils,"Reduire",true);
-		this.itemMonter = this.creeItem(this.menuOutils,"Monter",true);
-		this.itemDescendre  = this.creeItem(this.menuOutils,"Descendre",false);
+		this.itemAugmenter = this.creeItem(this.menuOutils,"Augmenter",true);
+		this.itemDiminuer  = this.creeItem(this.menuOutils,"Diminuer",false);
 		this.menubMaBarre.add(this.menuOutils);
 		//menu A PROPOS DE
 		this.menuAPropos = new JMenu("A Propos");
@@ -92,19 +92,19 @@ public class BarreDeMenu extends JMenuBar implements ActionListener
 	{
 		//menu fichier
 		if(e.getSource() == this.itemNouveau)         this.nouveau();
-		if(e.getSource() == this.itemEnrengister)     this.enrengister();
-		if(e.getSource() == this.itemEnrengisterSous) this.enrengisterSous();
-		if(e.getSource() == this.itemCharger)         this.charger();
-		if(e.getSource() == this.itemQuitter)         this.quitter();
+		if(e.getSource() == this.itemEnrengister)     this.Enrengister();
+		if(e.getSource() == this.itemEnrengisterSous) this.EnrengisterSous();
+		if(e.getSource() == this.itemCharger)         this.Charger();
+		if(e.getSource() == this.itemQuitter)         this.Quitter();
 		//menu fiche
-		if(e.getSource() == this.itemAjouter)   this.ajouter();
-		if(e.getSource() == this.itemSupprimer) this.supprimer();
-		if(e.getSource() == this.itemModifier)  this.modifier();
+		if(e.getSource() == this.itemAjouter)   this.Ajouter();
+		if(e.getSource() == this.itemSupprimer) this.Supprimer();
+		if(e.getSource() == this.itemModifier)  this.Modifier();
 		//menu outils
-		if(e.getSource() == this.itemAgrandir)   this.zoom();
-		if(e.getSource() == this.itemReduire)    this.deZoom();
-		if(e.getSource() == this.itemMonter)     this.monter();
-		if(e.getSource() == this.itemDescendre)  this.descendre();
+		if(e.getSource() == this.itemAgrandir)  this.zoom();
+		if(e.getSource() == this.itemReduire)   this.deZoom();
+		if(e.getSource() == this.itemAugmenter) this.augmenter();
+		if(e.getSource() == this.itemDiminuer)  this.diminuer();
 		//menu a propos
 		if(e.getSource() == this.itemAPropos) this.aPropos();
 	}
@@ -126,7 +126,7 @@ public class BarreDeMenu extends JMenuBar implements ActionListener
 		this.panelPrincipal.setTitle("Nouvel Arbre généalogique");
 	}
 
-	public void enrengister()
+	public void Enrengister()
 	{
 		//si le fichier a été charger
 		 if(this.panelPrincipal.getFichier().getCharger())
@@ -139,11 +139,11 @@ public class BarreDeMenu extends JMenuBar implements ActionListener
 		 }
 		 else
 		 {
-		 	this.enrengisterSous();
+		 	this.EnrengisterSous();
 		 }
 	}
 
-	public void enrengisterSous()
+	public void EnrengisterSous()
 	{
 		// parent component of the dialog
 		JFrame parentFrame = new JFrame();
@@ -162,7 +162,7 @@ public class BarreDeMenu extends JMenuBar implements ActionListener
 
 	}
 
-	public void charger()
+	public void Charger()
 	{
 		FichierGenealogique fichier = new FichierGenealogique();
 		//ouvre la boite de dial
@@ -184,7 +184,7 @@ public class BarreDeMenu extends JMenuBar implements ActionListener
 		}
 	}
 
-	private void quitter()
+	private void Quitter()
 	{
 		//Demande une confirmation avant de quitter
 		int choix = JOptionPane.showConfirmDialog(null,"Etes vous sûr de vouloir quitter sans enregistrer ?", "Quitter", JOptionPane.YES_NO_OPTION);
@@ -193,14 +193,14 @@ public class BarreDeMenu extends JMenuBar implements ActionListener
 	}
 
 	// MENU FICHE
-	public void ajouter()
+	public void Ajouter()
 	{
 		//Créer un nouveau fichier, méthode appelée au lancement
 		new NouvelleFiche(this.panelPrincipal);
 		this.panelPrincipal.getSelectionFiche().maj();
 	}
 
-	public void supprimer()
+	public void Supprimer()
 	{
 		//Controle si un fichier est charger ou si c'est un nouveau (Normalement c'est toujours le cas)
 		if(this.panelPrincipal.getFichier() == null)
@@ -236,7 +236,7 @@ public class BarreDeMenu extends JMenuBar implements ActionListener
 		}
 	}
 
-	public void modifier()
+	public void Modifier()
 	{
 		if(this.panelPrincipal.getFichier() == null)
 		{
@@ -276,13 +276,13 @@ public class BarreDeMenu extends JMenuBar implements ActionListener
 	{
 		this.panelPrincipal.getPanelAffichage().deZoom();
 	}
-	public void monter()
+	public void augmenter()
 	{
-		this.panelPrincipal.getPanelAffichage().monter();
+		this.panelPrincipal.getPanelAffichage().augmenter();
 	}
-	public void descendre()
+	public void diminuer()
 	{
-		this.panelPrincipal.getPanelAffichage().descendre();
+		this.panelPrincipal.getPanelAffichage().diminuer();
 	}
 	// MENU A PROPOS
 	public void aPropos()
