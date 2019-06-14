@@ -5,23 +5,24 @@ import java.awt.event.*;
 import java.util.ArrayList;
 import javax.swing.*;
 
+class PanelAffichage extends JPanel implements ActionListener, MouseListener {
 
-class PanelAffichage extends JPanel implements ActionListener,MouseListener
-{
+	private final int zoomMax = 5;
+	private final double zoomMin = 0.5;
 
 	private FicheGenealogique fiche;
 	private Rectangle rectangleSelection;
 	private int nbNiveau;
 
 	private JPopupMenu popUpMenu;
-	private JMenuItem  itemZoomer;
-	private JMenuItem  itemDezoomer;
+	private JMenuItem itemZoomer;
+	private JMenuItem itemDezoomer;
 
 	private ArrayList<int[]> listePos;
 	private ArrayList<FicheGenealogique> listeFiche;
 
 	private int nbNiveauMax;
-	private int zoom;
+	private double zoom;
 
 	private PanelPrincipal panelPrincipal;
 
@@ -32,16 +33,15 @@ class PanelAffichage extends JPanel implements ActionListener,MouseListener
 
 		this.popUpMenu = new JPopupMenu();
 
-    this.itemZoomer = new JMenuItem("Zoomer");
-    this.itemZoomer.addActionListener(this);
+		this.itemZoomer = new JMenuItem("Zoomer");
+		this.itemZoomer.addActionListener(this);
 
+		this.itemDezoomer = new JMenuItem("Dézoomer");
+		this.itemDezoomer.addActionListener(this);
 
-    this.itemDezoomer = new JMenuItem("Dézoomer");
-    this.itemDezoomer.addActionListener(this);
-
-    this.popUpMenu.add(this.itemZoomer);
-    this.popUpMenu.addSeparator();
-    this.popUpMenu.add(this.itemDezoomer);
+		this.popUpMenu.add(this.itemZoomer);
+		this.popUpMenu.addSeparator();
+		this.popUpMenu.add(this.itemDezoomer);
 
 		this.addMouseListener(this);
 
@@ -55,7 +55,8 @@ class PanelAffichage extends JPanel implements ActionListener,MouseListener
 			int width = (int) (this.panelPrincipal.getJScrollPane().getWidth() * this.zoom);
 			int height = (int) (this.panelPrincipal.getJScrollPane().getHeight() * this.zoom);
 
-			g.clearRect(0, 0, width, height);
+			g.clearRect(0, 0, this.panelPrincipal.getJScrollPane().getWidth() * this.zoomMax,
+					this.panelPrincipal.getJScrollPane().getHeight() * this.zoomMax);
 
 			// Calcul de nombre d'ancetre maximum
 			int nbLongueurLigMax = (int) Math.pow(2, nbNiveau - 1);
@@ -170,12 +171,17 @@ class PanelAffichage extends JPanel implements ActionListener,MouseListener
 	public void deZoom() {
 		if (this.zoom > 1)
 			this.zoom--;
+		if (this.zoom <= 1 && this.zoom > this.zoomMin)
+			this.zoom = this.zoom - 0.1;
+
 		this.repaint();
 	}
 
 	public void zoom() {
-		if (this.zoom < 5)
+		if (this.zoom < zoomMax && this.zoom >= 1)
 			this.zoom++;
+		if (this.zoom < 1)
+			this.zoom = this.zoom + 0.1;
 		this.repaint();
 	}
 
@@ -191,22 +197,30 @@ class PanelAffichage extends JPanel implements ActionListener,MouseListener
 		this.repaint();
 	}
 
-	public void mousePressed( MouseEvent event )
-  {
-    if ( event.isPopupTrigger() )
-    {
-      this.popUpMenu.show( event.getComponent(), event.getX(), event.getY() );
-    }
-  }
-
-  public void mouseExited  ( MouseEvent e) {}
-  public void mouseEntered ( MouseEvent e) {}
-  public void mouseReleased( MouseEvent e) {}
-  public void mouseClicked ( MouseEvent e) {}
-
-		public void actionPerformed(ActionEvent e)
-		{
-			if(e.getSource() == this.itemZoomer)   { this.zoom();   }
-			if(e.getSource() == this.itemDezoomer) { this.deZoom(); }
+	public void mousePressed(MouseEvent event) {
+		if (event.isPopupTrigger()) {
+			this.popUpMenu.show(event.getComponent(), event.getX(), event.getY());
 		}
+	}
+
+	public void mouseExited(MouseEvent e) {
+	}
+
+	public void mouseEntered(MouseEvent e) {
+	}
+
+	public void mouseReleased(MouseEvent e) {
+	}
+
+	public void mouseClicked(MouseEvent e) {
+	}
+
+	public void actionPerformed(ActionEvent e) {
+		if (e.getSource() == this.itemZoomer) {
+			this.zoom();
+		}
+		if (e.getSource() == this.itemDezoomer) {
+			this.deZoom();
+		}
+	}
 }
