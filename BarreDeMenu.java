@@ -82,7 +82,7 @@ public class BarreDeMenu extends JMenuBar implements ActionListener
 		this.choix = new JFileChooser();
 		this.choix.setDialogTitle("Séléctionner un fichier");
 		this.choix.setAcceptAllFileFilterUsed(false);
-		this.filter = new FileNameExtensionFilter("Fiche généalogique", "txt");
+		this.filter = new FileNameExtensionFilter("Fiche généalogique", "gene");
 		this.choix.addChoosableFileFilter(filter);
 		this.choix.setFileFilter(filter);
 		this.choix.setFileSelectionMode(JFileChooser.FILES_ONLY);
@@ -122,8 +122,20 @@ public class BarreDeMenu extends JMenuBar implements ActionListener
 	//MENU FICHIER
 	public void nouveau()
 	{
-		this.panelPrincipal.setFichier(new FichierGenealogique());
-		this.panelPrincipal.setTitle("Nouvel Arbre généalogique");
+		if(this.panelPrincipal.getFichier() != null && this.panelPrincipal.getFichier().getListeFiches().size() > 0)
+		{
+			int rep = JOptionPane.showConfirmDialog(null,"Etes vous sûr de vouloir créer une nouvelle fiche ?", "Nouveau", JOptionPane.YES_NO_OPTION);
+			if(rep == JOptionPane.YES_OPTION)
+			{
+				this.panelPrincipal.setFichier(new FichierGenealogique());
+				this.panelPrincipal.setTitle("Nouvel Arbre généalogique");
+			}
+		}
+		else
+		{
+			this.panelPrincipal.setFichier(new FichierGenealogique());
+			this.panelPrincipal.setTitle("Nouvel Arbre généalogique");
+		}
 	}
 
 	public void enrengister()
@@ -156,7 +168,7 @@ public class BarreDeMenu extends JMenuBar implements ActionListener
 		if (userSelection == JFileChooser.APPROVE_OPTION)
 		{
 			String chemin = fileChooser.getSelectedFile().getAbsolutePath();
-			chemin+=".txt";
+			chemin+=".gene";
 			if(chemin != null ) this.panelPrincipal.getFichier().enregistrerFichier(chemin);
 		}
 
@@ -166,9 +178,9 @@ public class BarreDeMenu extends JMenuBar implements ActionListener
 	{
 		FichierGenealogique fichier = new FichierGenealogique();
 		//ouvre la boite de dial
-		this.choix.showOpenDialog(this);
+		int reponse = this.choix.showOpenDialog(this);
 		//prend le chemin absolue
-		if(this.choix.getSelectedFile() != null) //permet de controler si l'utilisateur anule
+		if(this.choix.getSelectedFile() != null && reponse != JFileChooser.CANCEL_OPTION) //permet de controler si l'utilisateur anule
 		{
 			String chemin = this.choix.getSelectedFile().getAbsolutePath();
 			if(chemin != null )

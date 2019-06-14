@@ -1,22 +1,5 @@
 import java.awt.*;
-
-import java.awt.*;
-import java.awt.*;
-import java.awt.*;
 import java.awt.event.*;
-import java.awt.event.*;
-import java.awt.event.*;
-import java.awt.event.*;
-import javax.swing.*;
-import javax.swing.*;
-import javax.swing.*;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import org.omg.CORBA.SystemException;
-import java.awt.*;
-import java.awt.event.*;
-import javax.swing.*;
-import org.omg.CORBA.SystemException;
 import javax.swing.*;
 
 public class NouvelleFiche extends JFrame implements ActionListener
@@ -101,6 +84,7 @@ public String conformeNaissance()
 {
   String date = "";
   String[] ensDate;
+
   if( this.tabText[2].getText().charAt(2) == '-' || this.tabText[2].getText().charAt(5) == '-' || this.tabText[9].getText().charAt(2) == '-'
   ||this.tabText[9].getText().charAt(5) == '-' || this.tabText[14].getText().charAt(2) == '-' || this.tabText[14].getText().charAt(5) == '-')
   {

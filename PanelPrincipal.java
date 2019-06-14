@@ -17,27 +17,28 @@ public class PanelPrincipal extends JFrame {
 		this.setLocation(50, 100);
 		this.setMinimumSize(new Dimension(800, 600));
 
-		this.menu = new BarreDeMenu(this);
-		this.setJMenuBar(this.menu);
-
-		this.outils = new BarreDOutil(this.menu);
-		this.add(this.outils, BorderLayout.NORTH);
-		this.fiche = new SelectionFiche(this, this.getWidth());
-		// this.add(this.fiche, "West");
-
-		this.affichage = new PanelAffichage(this);
-		// this.add(this.affichage, "Center");
-		this.rightScrollPane = new JScrollPane(this.affichage);
-
+		this.menu                  = new BarreDeMenu(this);
+		this.outils                = new BarreDOutil(this.menu);
+		this.fiche                 = new SelectionFiche(this, this.getWidth());
+		this.affichage             = new PanelAffichage(this);
+		this.rightScrollPane       = new JScrollPane(this.affichage);
 		JScrollPane leftScrollPane = new JScrollPane(this.fiche);
+		JSplitPane splitPane       = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, leftScrollPane, rightScrollPane);
+
+		this.add(this.outils, BorderLayout.NORTH);
+		this.add(splitPane);
+
+		this.setJMenuBar(this.menu);
 		leftScrollPane.setPreferredSize(new Dimension(200, 0));
-
-		JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, leftScrollPane, rightScrollPane);
-		this.add(splitPane /* , BorderLayout.CENTER */ );
 		leftScrollPane.setMinimumSize(new Dimension(200, 0));
-
+		rightScrollPane.setMinimumSize(new Dimension((int)(this.getWidth()/1.4),0));
+		rightScrollPane.getVerticalScrollBar().setUnitIncrement(40);
+		rightScrollPane.getVerticalScrollBar().setBlockIncrement(40);
+		rightScrollPane.getHorizontalScrollBar().setUnitIncrement(40);
+		rightScrollPane.getHorizontalScrollBar().setBlockIncrement(40);
 		this.setVisible(true);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
 		// init le un nouveau doccument au lancement
 		this.menu.nouveau();
 	}

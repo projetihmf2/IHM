@@ -1,13 +1,21 @@
-import java.awt.*;
 import java.util.ArrayList;
 
+import java.awt.*;
+import java.awt.event.*;
+import java.util.ArrayList;
 import javax.swing.*;
 
-class PanelAffichage extends JPanel {
+
+class PanelAffichage extends JPanel implements ActionListener,MouseListener
+{
 
 	private FicheGenealogique fiche;
 	private Rectangle rectangleSelection;
 	private int nbNiveau;
+
+	private JPopupMenu popUpMenu;
+	private JMenuItem  itemZoomer;
+	private JMenuItem  itemDezoomer;
 
 	private ArrayList<int[]> listePos;
 	private ArrayList<FicheGenealogique> listeFiche;
@@ -17,12 +25,26 @@ class PanelAffichage extends JPanel {
 
 	private PanelPrincipal panelPrincipal;
 
-	// test
-
 	public PanelAffichage(PanelPrincipal panelPrincipal) {
 		this.panelPrincipal = panelPrincipal;
 		this.nbNiveauMax = 3;
 		this.zoom = 1;
+
+		this.popUpMenu = new JPopupMenu();
+
+    this.itemZoomer = new JMenuItem("Zoomer");
+    this.itemZoomer.addActionListener(this);
+
+
+    this.itemDezoomer = new JMenuItem("Dézoomer");
+    this.itemDezoomer.addActionListener(this);
+
+    this.popUpMenu.add(this.itemZoomer);
+    this.popUpMenu.addSeparator();
+    this.popUpMenu.add(this.itemDezoomer);
+
+		this.addMouseListener(this);
+
 		this.setVisible(true);
 	}
 
@@ -169,4 +191,22 @@ class PanelAffichage extends JPanel {
 		this.repaint();
 	}
 
+	public void mousePressed( MouseEvent event )
+  {
+    if ( event.isPopupTrigger() )
+    {
+      this.popUpMenu.show( event.getComponent(), event.getX(), event.getY() );
+    }
+  }
+
+  public void mouseExited  ( MouseEvent e) {}
+  public void mouseEntered ( MouseEvent e) {}
+  public void mouseReleased( MouseEvent e) {}
+  public void mouseClicked ( MouseEvent e) {}
+
+		public void actionPerformed(ActionEvent e)
+		{
+			if(e.getSource() == this.itemZoomer)   { this.zoom();   }
+			if(e.getSource() == this.itemDezoomer) { this.deZoom(); }
+		}
 }
