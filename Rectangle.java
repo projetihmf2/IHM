@@ -1,6 +1,4 @@
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Graphics;
+import java.awt.*;
 
 import javax.swing.*;
 
@@ -10,25 +8,27 @@ public class Rectangle {
     private static int largeur;
     private static int longeur;
     private static int decalage;
+    private static Font police = new Font("Roboto", Font.PLAIN, 14);
     private FicheGenealogique fiche;
 
     public Rectangle(int posX, int posY, FicheGenealogique fiche) {
         this.posX = posX;
         this.posY = posY;
         this.fiche = fiche;
+
     }
 
     public void peindre(Graphics g) {
         if (this.fiche != null) {
 
             g.setColor(Color.BLACK);
+            g.setFont(Rectangle.police);
             g.drawRect(this.posX, this.posY, Rectangle.longeur, Rectangle.largeur);
-            g.drawString(fiche.getNom(), this.posX + Rectangle.decalage,
-                    posY + Rectangle.decalage);
-            g.drawString(fiche.getPrenom(),this.posX + Rectangle.decalage,this.posY+ Rectangle.decalage*2);
-            g.drawString(fiche.getDateDeNaissance(),this.posX + Rectangle.decalage,this.posY+ Rectangle.decalage*3);
-            
-            
+            g.drawString(fiche.getNom(), this.posX + Rectangle.decalage, posY + Rectangle.decalage);
+            g.drawString(fiche.getPrenom(), this.posX + Rectangle.decalage, this.posY + Rectangle.decalage * 2);
+            g.drawString(fiche.getDateDeNaissance(), this.posX + Rectangle.decalage,
+                    this.posY + Rectangle.decalage * 3);
+
         }
 
     }
@@ -43,6 +43,10 @@ public class Rectangle {
 
     public static void setDecalage(int decalage) {
         Rectangle.decalage = decalage;
+    }
+
+    public static void setPoliceZoom(int zoom) {
+        Rectangle.police = new Font("Roboto", Font.PLAIN, 14 * zoom);
     }
 
     public static int getLargeur() {

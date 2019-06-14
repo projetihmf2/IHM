@@ -12,12 +12,15 @@ class PanelAffichage extends JPanel {
 	private ArrayList<int[]> listePos;
 	private ArrayList<FicheGenealogique> listeFiche;
 
-	// Test zoom et Niveau
-
 	private int nbNiveauMax;
 	private int zoom;
 
-	public PanelAffichage() {
+	private PanelPrincipal panelPrincipal;
+
+	// test
+
+	public PanelAffichage(PanelPrincipal panelPrincipal) {
+		this.panelPrincipal = panelPrincipal;
 		this.nbNiveauMax = 3;
 		this.zoom = 1;
 		this.setVisible(true);
@@ -26,15 +29,22 @@ class PanelAffichage extends JPanel {
 	public void paint(Graphics g) {
 		if (this.fiche != null) {
 			// effacement de la fenetre
-			g.clearRect(0, 0, this.getWidth(), this.getHeight());
+
+			int width = (int) (this.panelPrincipal.getJScrollPane().getWidth() * this.zoom);
+			int height = (int) (this.panelPrincipal.getJScrollPane().getHeight() * this.zoom);
+
+			g.clearRect(0, 0, width, height);
 
 			// Calcul de nombre d'ancetre maximum
 			int nbLongueurLigMax = (int) Math.pow(2, nbNiveau - 1);
 
+			this.setPreferredSize(new Dimension(width, height));
+
 			// Reglage de la longeur et de la largeur en fonction du nombre de composant
-			Rectangle.setLongeur(this.getWidth() / (nbLongueurLigMax + 1));
-			Rectangle.setLargeur(this.getHeight() / (this.nbNiveau * 2));
-			Rectangle.setDecalage(25);
+			Rectangle.setLongeur(width / (nbLongueurLigMax + 1));
+			Rectangle.setLargeur(height / (this.nbNiveau * 2));
+			Rectangle.setPoliceZoom(this.zoom);
+			Rectangle.setDecalage(25 * zoom);
 
 			// Cree un liste qui contient tout les rectangles
 			ArrayList<Rectangle> allRectangle = new ArrayList<Rectangle>();
@@ -49,30 +59,32 @@ class PanelAffichage extends JPanel {
 					k++;
 					FicheGenealogique ficheCourante = estPresent(i, k);
 
-					allRectangle.add(new Rectangle(((int) (j * (getWidth() / Math.pow(2, i))) - longueur / 2),
-							((int) (this.nbNiveau + 1 - i) * getHeight() / (this.nbNiveau + 1) - (largeur / 2)),
+					allRectangle.add(new Rectangle(((int) (j * (width / Math.pow(2, i))) - longueur / 2),
+							((int) (this.nbNiveau + 1 - i) * height / (this.nbNiveau + 1) - (largeur / 2)),
 							ficheCourante));
 
 					if (ficheCourante != null && i + 1 <= this.nbNiveauMax) {
 
 						if (ficheCourante.getPere() != null)
-							g.drawLine((int) (j * (getWidth() / Math.pow(2, i))),
-									(int) (this.nbNiveau + 1 - i) * getHeight() / (this.nbNiveau + 1) - (largeur / 2),
-									(int) ((j + 2 * ((j - 1) / 2)) * (getWidth() / Math.pow(2, i + 1))),
-									(int) (this.nbNiveau + 1 - (i + 1)) * getHeight() / (this.nbNiveau + 1)
-											+ (largeur / 2));
+							g.drawLine((int) (j * (width / Math.pow(2, i))),
+									(int) (this.nbNiveau + 1 - i) * height / (this.nbNiveau + 1) - (largeur / 2),
+									(int) ((j + 2 * ((j - 1) / 2)) * (width / Math.pow(2, i + 1))),
+									(int) (this.nbNiveau + 1 - (i + 1)) * height / (this.nbNiveau + 1) + (largeur / 2));
 						if (ficheCourante.getMere() != null)
-							g.drawLine((int) (j * (getWidth() / Math.pow(2, i))),
-									(int) (this.nbNiveau + 1 - i) * getHeight() / (this.nbNiveau + 1) - (largeur / 2),
-									(int) ((2 * j + 1) * (getWidth() / Math.pow(2, i + 1))),
-									(int) (this.nbNiveau + 1 - (i + 1)) * getHeight() / (this.nbNiveau + 1)
-											+ (largeur / 2));
+							g.drawLine((int) (j * (width / Math.pow(2, i))),
+									(int) (this.nbNiveau + 1 - i) * height / (this.nbNiveau + 1) - (largeur / 2),
+									(int) ((2 * j + 1) * (width / Math.pow(2, i + 1))),
+									(int) (this.nbNiveau + 1 - (i + 1)) * height / (this.nbNiveau + 1) + (largeur / 2));
 					}
 				}
 			}
 			for (Rectangle r : allRectangle) {
 				r.peindre(g);
 			}
+
+			this.panelPrincipal.getJScrollPane().revalidate();
+			this.panelPrincipal.revalidate();
+
 		}
 	}
 
@@ -84,7 +96,6 @@ class PanelAffichage extends JPanel {
 		this.listeFiche = new ArrayList<FicheGenealogique>();
 		this.listePos = new ArrayList<int[]>();
 		creeListPos(fiche, 1, 1);
-
 		this.repaint();
 
 	}
@@ -146,20 +157,15 @@ class PanelAffichage extends JPanel {
 		this.repaint();
 	}
 
-	public void augmenter() {
+	public void monter() {
 		if (this.nbNiveau > nbNiveauMax)
 			this.nbNiveauMax++;
 		this.repaint();
 	}
 
-	public void diminuer() {
+	public void descendre() {
 		if (this.nbNiveauMax != 1)
 			this.nbNiveauMax--;
-		this.repaint();
-	}
-
-	public void clear() {
-		this.fiche = null;
 		this.repaint();
 	}
 
