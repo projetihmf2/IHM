@@ -1,6 +1,7 @@
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
+import java.util.regex.*;
 
 public class NouvelleFiche extends JFrame implements ActionListener
 {
@@ -80,26 +81,31 @@ public NouvelleFiche(FicheGenealogique fiche, PanelPrincipal panelInfosPrincipal
   repaint();
 }
 
-public String conformeNaissance()
+public boolean conformeDate(String date)
 {
-  String date = "";
-  String[] ensDate;
-
-  if( this.tabText[2].getText().charAt(2) == '-' || this.tabText[2].getText().charAt(5) == '-' || this.tabText[9].getText().charAt(2) == '-'
-  ||this.tabText[9].getText().charAt(5) == '-' || this.tabText[14].getText().charAt(2) == '-' || this.tabText[14].getText().charAt(5) == '-')
+  if(!Pattern.matches("^(3[01]|[12][0-9]|0[1-9])-(1[0-2]|0[1-9])-[0-9]{4}$",date))
   {
-    ensDate = this.tabText[2].getText().split("-");
-    date = ensDate[0] + "/" + ensDate[1] + "/" + ensDate[2];
+    JOptionPane.showMessageDialog(null, "La date " + date + " ne correspond pas au format xx-xx-xxxx", "Erreur !", JOptionPane.ERROR_MESSAGE);
+    return false;
   }
-  else
-  {
-    date = this.tabText[2].getText();
-  }
-  return date;
+  return true;
 }
+
 
 public boolean creer()
 {
+  if(!this.tabText[2].getText().equals(""))
+  {
+    if(!this.conformeDate(this.tabText[2].getText())) return false;
+  }
+  if(!this.tabText[9].getText().equals(""))
+  {
+    if(!this.conformeDate(this.tabText[9].getText())) return false;
+  }
+  if(!this.tabText[12].getText().equals(""))
+  {
+    if(!this.conformeDate(this.tabText[12].getText())) return false;
+  }
   if(this.tabText[0].getText().equals("") || this.tabText[1].getText().equals(""))
   {
     JOptionPane.showMessageDialog(null, "Le nom et/ou le prénom n'est pas donné.", "Erreur !", JOptionPane.ERROR_MESSAGE);
