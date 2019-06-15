@@ -2,21 +2,25 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.event.ActionEvent;
-import javax.swing.*;
-
-public class PanelPrincipal extends JFrame {
-	private BarreDeMenu menu;
-	private BarreDOutil outils;
+/*----------------------------------------------------------*/
+/*CLASSE QUI CREE LE PANEL PRINCIPAL ET GERE SES EVENEMENTS */
+/*----------------------------------------------------------*/
+public class PanelPrincipal extends JFrame
+{
+	private BarreDeMenu    menu;
+	private BarreDOutil    outils;
 	private SelectionFiche fiche;
 	private PanelAffichage affichage;
-	private JScrollPane rightScrollPane;
+	private JScrollPane    rightScrollPane;
 
-	public PanelPrincipal() {
+	public PanelPrincipal()
+	{
 		this.setTitle("Arbre généalogique");
 		this.setSize(800, 600);
 		this.setLocation(50, 100);
 		this.setMinimumSize(new Dimension(800, 600));
 
+		//Création des composants
 		this.menu                  = new BarreDeMenu(this);
 		this.outils                = new BarreDOutil(this.menu);
 		this.fiche                 = new SelectionFiche(this, this.getWidth());
@@ -25,9 +29,11 @@ public class PanelPrincipal extends JFrame {
 		JScrollPane leftScrollPane = new JScrollPane(this.fiche);
 		JSplitPane splitPane       = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, leftScrollPane, rightScrollPane);
 
+		//Ajout
 		this.add(this.outils, BorderLayout.NORTH);
 		this.add(splitPane);
 
+		//Traitement
 		this.setJMenuBar(this.menu);
 		leftScrollPane.setPreferredSize(new Dimension(200, 0));
 		leftScrollPane.setMinimumSize(new Dimension(200, 0));
@@ -39,38 +45,32 @@ public class PanelPrincipal extends JFrame {
 		this.setVisible(true);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-		// init le un nouveau doccument au lancement
+		//Initialise le un nouveau document au lancement
 		this.menu.nouveau();
 	}
 
-	public void ajouterFiche(FicheGenealogique fiche) {
+	//Ajoute à l'arbre une fiche passée en paramètre
+	public void ajouterFiche(FicheGenealogique fiche)
+	{
 		if (this.fiche.getGenealogique() != null)
 			this.fiche.getGenealogique().addFicheGenealogique(fiche);
 		this.getSelectionFiche().maj();
 	}
 
-	public void nouveau(FicheGenealogique fiche) {
+  //Creation de l'arbre lors de l'envoi d'un fiche
+	public void nouveau(FicheGenealogique fiche)
+	{
 		this.affichage.nouveau(fiche);
 	}
 
-	public JScrollPane getJScrollPane() {
-		return this.rightScrollPane;
-	}
-
-	public void setFichier(FichierGenealogique fichier) {
+	//Envoi la fiche
+	public void setFichier(FichierGenealogique fichier)
+	{
 		this.fiche.setGenealogique(fichier);
 	}
 
-	public FichierGenealogique getFichier() {
-		return this.fiche.getGenealogique();
-	}
-
-	public SelectionFiche getSelectionFiche() {
-		return this.fiche;
-	}
-
-	public PanelAffichage getPanelAffichage() {
-		return this.affichage;
-	}
-
+	public JScrollPane getJScrollPane      () { return this.rightScrollPane;         }
+	public FichierGenealogique getFichier  () { return this.fiche.getGenealogique(); }
+	public SelectionFiche getSelectionFiche() { return this.fiche;                   }
+	public PanelAffichage getPanelAffichage() { return this.affichage;               }
 }

@@ -1,44 +1,39 @@
 import javax.swing.*;
-
 import java.awt.*;
-import java.awt.FileDialog;
 import java.awt.event.*;
 import java.util.*;
-import javax.swing.*;
-import javax.swing.JOptionPane;
 import javax.swing.filechooser.*;
 import java.util.*;
-import javax.swing.filechooser.*;
 /*----------------------------------------------------------*/
-/*CLASSE QUI CREE LE MENU PRINCIPAL ET GERE C'EST EVENEMENT'*/
+/*CLASSE QUI CREE LE MENU PRINCIPAL ET GERE SES EVENEMENTS  */
 /*----------------------------------------------------------*/
 public class BarreDeMenu extends JMenuBar implements ActionListener
 {
 	//Menu principal
-	private JMenuBar menubMaBarre ;
-	//element menu fichier
-	private JMenu menuFichier;
+	private JMenuBar  menubMaBarre ;
+	//elements menu fichier
+	private JMenu     menuFichier;
 	private JMenuItem itemNouveau;
 	private JMenuItem itemEnrengister;
 	private JMenuItem itemEnrengisterSous;
 	private JMenuItem itemCharger;
 	private JMenuItem itemQuitter;
 	//element menu fiche
-	private JMenu menuFiche;
+	private JMenu     menuFiche;
 	private JMenuItem itemAjouter;
 	private JMenuItem itemSupprimer;
 	private JMenuItem itemModifier;
 	//element menu  outils
-	private JMenu menuOutils;
+	private JMenu     menuOutils;
 	private JMenuItem itemAgrandir;
 	private JMenuItem itemReduire;
 	private JMenuItem itemMonter;
 	private JMenuItem itemDescendre;
 	//element menu a propos de
-	private JMenu menuAPropos;
+	private JMenu     menuAPropos;
 	private JMenuItem itemAPropos;
 	//Bulle de dial
-	private JFileChooser choix;
+	private JFileChooser            choix;
 	private FileNameExtensionFilter filter;
 	//principal
 	private PanelPrincipal panelPrincipal ;
@@ -47,8 +42,8 @@ public class BarreDeMenu extends JMenuBar implements ActionListener
 	public BarreDeMenu(PanelPrincipal panelPrincipal)
 	{
 		//init
-		this.menubMaBarre = new JMenuBar();
-		this.panelPrincipal=panelPrincipal;
+		this.menubMaBarre   = new JMenuBar();
+		this.panelPrincipal = panelPrincipal;
 		//menu FICHIER
 		this.menuFichier         = new JMenu("Fichier");
 		this.itemNouveau         = this.creeItem(this.menuFichier,"Nouveau",true);
@@ -120,11 +115,12 @@ public class BarreDeMenu extends JMenuBar implements ActionListener
 	}
 
 	//MENU FICHIER
+	//Méthode appelée au lancement du programme, permet de créer un nouveau fichier généalogique
 	public void nouveau()
 	{
 		if(this.panelPrincipal.getFichier() != null && this.panelPrincipal.getFichier().getListeFiches().size() > 0)
-		{
-			int rep = JOptionPane.showConfirmDialog(null,"Etes vous sûr de vouloir créer une nouvelle fiche ?", "Nouveau", JOptionPane.YES_NO_OPTION);
+		{//Vérification pour ne pas perdre les données déja créer si l'utilisateur n'a pas enregistrer le fichier
+			int rep = JOptionPane.showConfirmDialog(null,"Etes vous sûr de vouloir créer un nouveau fichier ?", "Nouveau", JOptionPane.YES_NO_OPTION);
 			if(rep == JOptionPane.YES_OPTION)
 			{
 				this.panelPrincipal.setFichier(new FichierGenealogique());
@@ -138,6 +134,7 @@ public class BarreDeMenu extends JMenuBar implements ActionListener
 		}
 	}
 
+	//Méthode pour enregistrer l'arbre actuellement charger
 	public void enrengister()
 	{
 		//si le fichier a été charger
@@ -155,11 +152,9 @@ public class BarreDeMenu extends JMenuBar implements ActionListener
 		 }
 	}
 
+	//Méthode pour enregistrer l'arbre à un endroit donné
 	public void enrengisterSous()
 	{
-		// parent component of the dialog
-		JFrame parentFrame = new JFrame();
-
 		JFileChooser fileChooser = new JFileChooser();
 		fileChooser.setDialogTitle("Enrengistrer Sous");
 
@@ -174,6 +169,7 @@ public class BarreDeMenu extends JMenuBar implements ActionListener
 
 	}
 
+	//Méthode pour charger un fichier depuis un endroit donné
 	public void charger()
 	{
 		FichierGenealogique fichier = new FichierGenealogique();
@@ -196,6 +192,7 @@ public class BarreDeMenu extends JMenuBar implements ActionListener
 		}
 	}
 
+	//Méthode pour quitter le programme
 	private void quitter()
 	{
 		//Demande une confirmation avant de quitter
@@ -208,7 +205,7 @@ public class BarreDeMenu extends JMenuBar implements ActionListener
 	public void ajouter()
 	{
 		//Créer un nouveau fichier, méthode appelée au lancement
-		new NouvelleFiche(this.panelPrincipal);
+		new NouvelleFiche(this.panelPrincipal, false);
 		this.panelPrincipal.getSelectionFiche().maj();
 	}
 
@@ -248,6 +245,7 @@ public class BarreDeMenu extends JMenuBar implements ActionListener
 		}
 	}
 
+	//Méthode pour modifier une fiche déja créée
 	public void modifier()
 	{
 		if(this.panelPrincipal.getFichier() == null)
@@ -280,23 +278,28 @@ public class BarreDeMenu extends JMenuBar implements ActionListener
 		this.panelPrincipal.getSelectionFiche().maj();
 	}
 	// MENU OUTILS
+	//méthode pour zoomer sur l'arbre
 	public void zoom()
 	{
 		this.panelPrincipal.getPanelAffichage().zoom();
 	}
+	//Méthode pour Dézoomer sur l'arbre
 	public void deZoom()
 	{
 		this.panelPrincipal.getPanelAffichage().deZoom();
 	}
+	//Méthode pour afficher un ancètre de plus dans l'arbre
 	public void monter()
 	{
 		this.panelPrincipal.getPanelAffichage().monter();
 	}
+	//Méthode pour afficher un ancètre de moins dans l'arbre
 	public void descendre()
 	{
 		this.panelPrincipal.getPanelAffichage().descendre();
 	}
 	// MENU A PROPOS
+	//Renseigne sur le logiciel
 	public void aPropos()
 	{
 		String message = "Logiciel d'arbre généalogique créé par ";

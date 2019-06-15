@@ -2,8 +2,8 @@
  * Cette classe permet de reprÃ©senter la fiche gÃ©nÃ©alogique d'une personne
  * @author Claude.Duvallet@gmail.com
  */
-import javax.swing.*;
-public class FicheGenealogique {
+import javax.swing.JButton;
+public class FicheGenealogique implements Comparable<FicheGenealogique>{
 
 	private String nom;
 	private String prenom;
@@ -306,6 +306,28 @@ public class FicheGenealogique {
 			resultat+=";;";
 		resultat+="\n";
 		return resultat;
+	}
+
+	public int compareTo(FicheGenealogique fiche)
+	{
+		String nom = "";
+		String prenom = "";
+		if(this.nom.length() > fiche.nom.length()) { nom = fiche.nom; }
+		else { nom = this.nom; }
+		if(this.prenom.length() > fiche.prenom.length()) { prenom = fiche.prenom; }
+		else { prenom = this.prenom; }
+
+		for(int i = 0; i < nom.length(); i++)
+		{
+			if(this.nom.charAt(i) > fiche.nom.charAt(i)) { return 1;  }
+			if(this.nom.charAt(i) < fiche.nom.charAt(i)) { return -1; }
+		}
+		for(int i = 0; i < prenom.length(); i++)
+		{
+			if(this.prenom.charAt(i) > fiche.prenom.charAt(i)) { return 1;  }
+			if(this.prenom.charAt(i) < fiche.prenom.charAt(i)) { return -1; }
+		}
+		return 0;
 	}
 
 	/**

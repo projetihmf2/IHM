@@ -1,9 +1,14 @@
 import java.awt.*;
 import javax.swing.*;
 import java.awt.event.*;
-
-public class BarreDOutil extends JPanel implements MouseListener {
+/*----------------------------------------------------------*/
+/*CLASSE QUI CREE LA BARRE D'OUTIL ET GERE SES EVENEMENTS   */
+/*----------------------------------------------------------*/
+public class BarreDOutil extends JPanel implements MouseListener
+{
+	//Le menu
 	private BarreDeMenu menu;
+	//Les différents labels contenant les images
 	private JLabel zoom;
 	private JLabel deZoom;
 	private JLabel monter;
@@ -11,87 +16,82 @@ public class BarreDOutil extends JPanel implements MouseListener {
 	private JLabel lblSauvegarder;
 	private JLabel lblCharger;
 	private JLabel lblNouveau;
-	private Image imgZoom;
-	private Image imgDeZoom;
-	private Image imgDescendre;
-	private Image imgMonter;
-	private Image imgSauvegarder;
-	private Image imgCharger;
-	private Image imgNouveau;
 
 	public BarreDOutil(BarreDeMenu menu) {
 		this.menu = menu;
 		this.setLayout(new FlowLayout(FlowLayout.LEFT, 20, 5));
+
 		// cree les image
-		this.imgZoom = this.creeImage("add-searching.png");
-		this.imgDeZoom = this.creeImage("delete-searching.png");
-		this.imgDescendre = this.creeImage("arrow-down.png");
-		this.imgMonter = this.creeImage("arrow-up.png");
-		this.imgSauvegarder = this.creeImage("save.png");
-		this.imgCharger = this.creeImage("load.png");
-		this.imgNouveau = this.creeImage("ajouter.png");
+		Image imgZoom = this.creeImage("add-searching.png");
+		Image imgDeZoom = this.creeImage("delete-searching.png");
+		Image imgDescendre = this.creeImage("arrow-down.png");
+		Image imgMonter = this.creeImage("arrow-up.png");
+		Image imgSauvegarder = this.creeImage("save.png");
+		Image imgCharger = this.creeImage("load.png");
+		Image imgNouveau = this.creeImage("ajouter.png");
+
 		// cree les label et les ajoute
-		this.zoom = this.creeLabel(this.imgZoom);
-		this.deZoom = this.creeLabel(this.imgDeZoom);
-		this.descendre = this.creeLabel(this.imgDescendre);
-		this.monter = this.creeLabel(this.imgMonter);
-		this.lblSauvegarder = this.creeLabel(this.imgSauvegarder);
-		this.lblCharger = this.creeLabel(this.imgCharger);
-		this.lblNouveau = this.creeLabel(this.imgNouveau);
+		this.zoom = this.creeLabel(imgZoom);
+		this.deZoom = this.creeLabel(imgDeZoom);
+		this.descendre = this.creeLabel(imgDescendre);
+		this.monter = this.creeLabel(imgMonter);
+		this.lblSauvegarder = this.creeLabel(imgSauvegarder);
+		this.lblCharger = this.creeLabel(imgCharger);
+		this.lblNouveau = this.creeLabel(imgNouveau);
 
 		this.setVisible(true);
 	}
 
-	public void mouseExited(MouseEvent e) {
+	//Remet le curseur normal quand la souris n'est plus sur le label
+	public void mouseExited(MouseEvent e)
+	{
 		this.setCursor(Cursor.getDefaultCursor());
 	}
-
-	public void mouseEntered(MouseEvent e) {
+	//Change le curseur sur le passage du label
+	public void mouseEntered(MouseEvent e)
+	{
 		this.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 	}
 
-	public void mouseReleased(MouseEvent e) {
-	}
-
-	public void mousePressed(MouseEvent e) {
-	}
-
+	public void mouseReleased(MouseEvent e) {}
+	public void mousePressed(MouseEvent e)  {}
+	//Action au clique sur les labels correspondant
 	public void mouseClicked(MouseEvent e) {
 		if (e.getSource() == this.lblNouveau) {
-			this.menu.nouveau();
+			this.menu.nouveau(); //Créer un nouveau fichier
 		}
 		if (e.getSource() == this.lblCharger) {
-			this.menu.charger();
+			this.menu.charger(); //Charger un fichier
 		}
 		if (e.getSource() == this.lblSauvegarder) {
-			this.menu.enrengister();
+			this.menu.enrengister(); //Enregister le fichier courant
 		}
 		if (e.getSource() == this.zoom) {
-			this.menu.zoom();
+			this.menu.zoom(); //Zoomer sur l'arbre
 		}
 		if (e.getSource() == this.deZoom) {
-			this.menu.deZoom();
+			this.menu.deZoom(); //Dézoomer sur l'arbre
 		}
 		if (e.getSource() == this.descendre) {
-			this.menu.descendre();
+			this.menu.descendre(); //Afficher un ancètre de moins
 		}
 		if (e.getSource() == this.monter) {
-			this.menu.monter();
+			this.menu.monter(); //Afficher un ancètre de plus
 		}
 	}
 
-	// private
-
-	// facile la creation des Lable image
-	private JLabel creeLabel(Image image) {
+	// facilite la création des Lable image
+	private JLabel creeLabel(Image image)
+	{
 		JLabel tmp = new JLabel(new ImageIcon(image));
 		tmp.addMouseListener(this);
 		this.add(tmp);
 		return tmp;
 	}
 
-	// facilite la creatio d'image
-	private Image creeImage(String s) {
+	// facilite la creation d'image
+	private Image creeImage(String s)
+	{
 		return Toolkit.getDefaultToolkit().getImage("images/" + s);
 	}
 }
