@@ -41,12 +41,12 @@ public class Rectangle {
         Rectangle.longeur = longeur;
     }
 
-    public static void setDecalage(int decalage) {
-        Rectangle.decalage = decalage;
+    public static void setDecalage(double decalage) {
+        Rectangle.decalage = (int) decalage;
     }
 
-    public static void setPoliceZoom(int zoom) {
-        Rectangle.police = new Font("Roboto", Font.PLAIN, 14 * zoom);
+    public static void setPoliceZoom(double zoom) {
+        Rectangle.police = new Font("Roboto", Font.PLAIN, (int)( 14 * zoom));
     }
 
     public static int getLargeur() {
