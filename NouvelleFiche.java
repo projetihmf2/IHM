@@ -22,7 +22,7 @@ public class NouvelleFiche extends JFrame implements ActionListener
   private JButton           btnValider;
   private JButton           btnAnnuler;
   //Le panel de la frame
-  private PanelPrincipal    panelPrincipal;
+  private IHM    ihm;
   //Si c'est une modification de fiche
   private boolean           modifFiche;
   //Les différentes fiches
@@ -30,10 +30,10 @@ public class NouvelleFiche extends JFrame implements ActionListener
   private FicheGenealogique nouvelleFiche;
 
   //CONSTRUCTEURS
-  public NouvelleFiche(PanelPrincipal panelInfosPrincipal, boolean modifFiche)
+  public NouvelleFiche(IHM panelInfosPrincipal, boolean modifFiche)
   {
     this.setTitle("NouvelleFiche");
-    this.panelPrincipal = panelInfosPrincipal;
+    this.ihm = panelInfosPrincipal;
     this.modifFiche = modifFiche;
     this.setResizable(false);
 
@@ -78,7 +78,7 @@ public class NouvelleFiche extends JFrame implements ActionListener
     this.setDefaultCloseOperation(JDialog.HIDE_ON_CLOSE);
   }
 
-  public NouvelleFiche(FicheGenealogique fiche, PanelPrincipal panelInfosPrincipal)
+  public NouvelleFiche(FicheGenealogique fiche, IHM panelInfosPrincipal)
   {
     this(panelInfosPrincipal, true);
     this.ficheEnCours = fiche;
@@ -150,8 +150,8 @@ public class NouvelleFiche extends JFrame implements ActionListener
       {
         if(this.modifFiche) //Si c'est une modification de fiche
         { //On recherche les parents qui y sont renseignés en fonction de leur Prénom et nom
-          FicheGenealogique pere = this.panelPrincipal.getFichier().rechercher(this.tabText[5].getText(), this.tabText[6].getText());
-          FicheGenealogique mere = this.panelPrincipal.getFichier().rechercher(this.tabText[7].getText(), this.tabText[8].getText());
+          FicheGenealogique pere = this.ihm.getFichier().rechercher(this.tabText[5].getText(), this.tabText[6].getText());
+          FicheGenealogique mere = this.ihm.getFichier().rechercher(this.tabText[7].getText(), this.tabText[8].getText());
 
           if(pere == null && (!this.tabText[5].getText().equals("") || !this.tabText[6].getText().equals(""))) //Si le pere n'a pas été trouvé mais que la case est remplie
           {
@@ -173,8 +173,8 @@ public class NouvelleFiche extends JFrame implements ActionListener
           }
         }
         if(!this.modifFiche)
-        this.panelPrincipal.ajouterFiche(this.nouvelleFiche); //Si ce n'est pas une modification on ajoute la fiche à la base
-        this.panelPrincipal.getSelectionFiche().maj(); //Et on fait une mise à jour de l'affichage
+        this.ihm.ajouterFiche(this.nouvelleFiche); //Si ce n'est pas une modification on ajoute la fiche à la base
+        this.ihm.getSelectionFiche().maj(); //Et on fait une mise à jour de l'affichage
         return true;
       }
     }
@@ -235,9 +235,9 @@ public class NouvelleFiche extends JFrame implements ActionListener
       {
         if(this.modifFiche && !this.ficheEnCours.equals(this.nouvelleFiche)) //Si c'est une modification de fiche
         {                                                                    //et que la nouvelle fiche != à l'ancienne
-          this.panelPrincipal.getFichier().supprimerFiche(this.ficheEnCours);//On la supprime
+          this.ihm.getFichier().supprimerFiche(this.ficheEnCours);//On la supprime
         }
-        this.panelPrincipal.getSelectionFiche().maj(); //Et on fait une mise à jour de l'affichage
+        this.ihm.getSelectionFiche().maj(); //Et on fait une mise à jour de l'affichage
         this.dispose();
       }
     }

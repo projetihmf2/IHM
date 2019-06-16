@@ -27,11 +27,11 @@ class PanelAffichage extends JPanel implements ActionListener, MouseListener
 	private       ArrayList<int[]>             listePos;
 	private       ArrayList<FicheGenealogique> listeFiche;
 
-	private       PanelPrincipal               panelPrincipal;
+	private       IHM         					       ihm;
 
-	public PanelAffichage(PanelPrincipal panelPrincipal)
+	public PanelAffichage(IHM ihm)
 	{
-		this.panelPrincipal = panelPrincipal;
+		this.ihm = ihm;
 		this.nbNiveauMax = 3;
 		this.zoom = 1;
 
@@ -60,11 +60,11 @@ class PanelAffichage extends JPanel implements ActionListener, MouseListener
 		{
 			// effacement de la fenetre
 
-			int width = (int) (this.panelPrincipal.getJScrollPane().getWidth() * this.zoom);
-			int height = (int) (this.panelPrincipal.getJScrollPane().getHeight() * this.zoom);
+			int width = (int) (this.ihm.getJScrollPane().getWidth() * this.zoom);
+			int height = (int) (this.ihm.getJScrollPane().getHeight() * this.zoom);
 
-			g.clearRect(0, 0, this.panelPrincipal.getJScrollPane().getWidth() * this.ZOOM_MAX,
-			this.panelPrincipal.getJScrollPane().getHeight() * this.ZOOM_MAX);
+			g.clearRect(0, 0, this.ihm.getJScrollPane().getWidth() * this.ZOOM_MAX,
+			this.ihm.getJScrollPane().getHeight() * this.ZOOM_MAX);
 
 			// Calcul de nombre d'ancetre maximum
 			int nbLongueurLigMax = (int) Math.pow(2, nbNiveau - 1);
@@ -117,8 +117,8 @@ class PanelAffichage extends JPanel implements ActionListener, MouseListener
 			}
 			for (Rectangle r : allRectangle) { r.peindre(g); }
 
-			this.panelPrincipal.getJScrollPane().revalidate();
-			this.panelPrincipal.revalidate();
+			this.ihm.getJScrollPane().revalidate();
+			this.ihm.revalidate();
 		}
 	}
 

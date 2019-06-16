@@ -36,14 +36,14 @@ public class BarreDeMenu extends JMenuBar implements ActionListener
 	private JFileChooser            choix;
 	private FileNameExtensionFilter filter;
 	//principal
-	private PanelPrincipal panelPrincipal ;
+	private IHM ihm ;
 	private boolean        anulerModif;
 
-	public BarreDeMenu(PanelPrincipal panelPrincipal)
+	public BarreDeMenu(IHM ihm)
 	{
 		//init
 		this.menubMaBarre   = new JMenuBar();
-		this.panelPrincipal = panelPrincipal;
+		this.ihm = ihm;
 		//menu FICHIER
 		this.menuFichier         = new JMenu("Fichier");
 		this.itemNouveau         = this.creeItem(this.menuFichier,"Nouveau",true);
@@ -118,19 +118,19 @@ public class BarreDeMenu extends JMenuBar implements ActionListener
 	//Méthode appelée au lancement du programme, permet de créer un nouveau fichier généalogique
 	public void nouveau()
 	{
-		if(this.panelPrincipal.getFichier() != null && this.panelPrincipal.getFichier().getListeFiches().size() > 0)
+		if(this.ihm.getFichier() != null && this.ihm.getFichier().getListeFiches().size() > 0)
 		{//Vérification pour ne pas perdre les données déja créer si l'utilisateur n'a pas enregistrer le fichier
 			int rep = JOptionPane.showConfirmDialog(null,"Etes vous sûr de vouloir créer un nouveau fichier ?", "Nouveau", JOptionPane.YES_NO_OPTION);
 			if(rep == JOptionPane.YES_OPTION)
 			{
-				this.panelPrincipal.setFichier(new FichierGenealogique());
-				this.panelPrincipal.setTitle("Nouvel Arbre généalogique");
+				this.ihm.setFichier(new FichierGenealogique());
+				this.ihm.setTitle("Nouvel Arbre généalogique");
 			}
 		}
 		else
 		{
-			this.panelPrincipal.setFichier(new FichierGenealogique());
-			this.panelPrincipal.setTitle("Nouvel Arbre généalogique");
+			this.ihm.setFichier(new FichierGenealogique());
+			this.ihm.setTitle("Nouvel Arbre généalogique");
 		}
 	}
 
@@ -138,12 +138,12 @@ public class BarreDeMenu extends JMenuBar implements ActionListener
 	public void enrengister()
 	{
 		//si le fichier a été charger
-		 if(this.panelPrincipal.getFichier().getCharger())
+		 if(this.ihm.getFichier().getCharger())
 		 {
 			int rep = JOptionPane.showConfirmDialog(null,"Etes vous sûr de vouloir enregistrer", "Enregister", JOptionPane.YES_NO_OPTION);
 			if(rep == JOptionPane.YES_OPTION)
 			{
-				this.panelPrincipal.getFichier().enregistrerFichier(this.choix.getSelectedFile().getAbsolutePath()) ;
+				this.ihm.getFichier().enregistrerFichier(this.choix.getSelectedFile().getAbsolutePath()) ;
 			}
 		 }
 		 else
@@ -158,13 +158,13 @@ public class BarreDeMenu extends JMenuBar implements ActionListener
 		JFileChooser fileChooser = new JFileChooser();
 		fileChooser.setDialogTitle("Enrengistrer Sous");
 
-		int userSelection = fileChooser.showSaveDialog(this.panelPrincipal);
+		int userSelection = fileChooser.showSaveDialog(this.ihm);
 
 		if (userSelection == JFileChooser.APPROVE_OPTION)
 		{
 			String chemin = fileChooser.getSelectedFile().getAbsolutePath();
 			chemin+=".gene";
-			if(chemin != null ) this.panelPrincipal.getFichier().enregistrerFichier(chemin);
+			if(chemin != null ) this.ihm.getFichier().enregistrerFichier(chemin);
 		}
 
 	}
@@ -184,11 +184,11 @@ public class BarreDeMenu extends JMenuBar implements ActionListener
 				//charge
 				fichier.chargerFichier(this.choix.getSelectedFile().getAbsolutePath());
 				//modifie la selection
-				this.panelPrincipal.setFichier(fichier);
+				this.ihm.setFichier(fichier);
 				// previent que le fichier a été charger , facilite l'enregistrer
-				this.panelPrincipal.getFichier().setCharger(true);
+				this.ihm.getFichier().setCharger(true);
 			}
-			this.panelPrincipal.setTitle(this.choix.getSelectedFile().getName());
+			this.ihm.setTitle(this.choix.getSelectedFile().getName());
 		}
 	}
 
@@ -205,21 +205,21 @@ public class BarreDeMenu extends JMenuBar implements ActionListener
 	public void ajouter()
 	{
 		//Créer un nouveau fichier, méthode appelée au lancement
-		new NouvelleFiche(this.panelPrincipal, false);
-		this.panelPrincipal.getSelectionFiche().maj();
+		new NouvelleFiche(this.ihm, false);
+		this.ihm.getSelectionFiche().maj();
 	}
 
 	public void supprimer()
 	{
 		//Controle si un fichier est charger ou si c'est un nouveau (Normalement c'est toujours le cas)
-		if(this.panelPrincipal.getFichier() == null)
+		if(this.ihm.getFichier() == null)
 		{
 			JOptionPane.showMessageDialog(null,"Il n'y a pas de fiches", "Supprimer", JOptionPane.WARNING_MESSAGE);
 		}
 		else
 		{
 			//Conversion de la liste  des fiches en Object pour les manipuler avec un inputDialog
-			ArrayList<FicheGenealogique> liste = this.panelPrincipal.getFichier().getListeFiches();
+			ArrayList<FicheGenealogique> liste = this.ihm.getFichier().getListeFiches();
 			Object[] choix = new Object[liste.size()];
 			for(int i = 0; i < liste.size(); i++)
 			{
@@ -235,26 +235,26 @@ public class BarreDeMenu extends JMenuBar implements ActionListener
 				{
 					if(s != null && s.equals(liste.get(i).getNom() + " " + liste.get(i).getPrenom()))
 					{
-						this.panelPrincipal.getFichier().supprimerFiche(i);
-						this.panelPrincipal.getSelectionFiche().maj();
+						this.ihm.getFichier().supprimerFiche(i);
+						this.ihm.getSelectionFiche().maj();
 						break; //Sort de la boucle car la taille diminue de 1 et la tache a été effectuée
 					}
 				}
 			}
-		this.panelPrincipal.getSelectionFiche().maj();
+		this.ihm.getSelectionFiche().maj();
 		}
 	}
 
 	//Méthode pour modifier une fiche déja créée
 	public void modifier()
 	{
-		if(this.panelPrincipal.getFichier() == null)
+		if(this.ihm.getFichier() == null)
 		{
 			JOptionPane.showMessageDialog(null,"Il n'y a pas de fiches", "Modifier", JOptionPane.WARNING_MESSAGE);
 		}
 		else
 		{
-			ArrayList<FicheGenealogique> liste = this.panelPrincipal.getFichier().getListeFiches();
+			ArrayList<FicheGenealogique> liste = this.ihm.getFichier().getListeFiches();
 			Object[] choix = new Object[liste.size()];
 			for(int i = 0; i < liste.size(); i++)
 			{
@@ -268,35 +268,35 @@ public class BarreDeMenu extends JMenuBar implements ActionListener
 				{
 					if(s != null && s.equals(liste.get(i).getNom() + " " + liste.get(i).getPrenom()))
 					{
-						FicheGenealogique ficheActuelle = this.panelPrincipal.getFichier().contains(liste.get(i));
-						new NouvelleFiche(ficheActuelle, this.panelPrincipal);
-						this.panelPrincipal.getSelectionFiche().maj();
+						FicheGenealogique ficheActuelle = this.ihm.getFichier().contains(liste.get(i));
+						new NouvelleFiche(ficheActuelle, this.ihm);
+						this.ihm.getSelectionFiche().maj();
 					}
 				}
 			}
 		}
-		this.panelPrincipal.getSelectionFiche().maj();
+		this.ihm.getSelectionFiche().maj();
 	}
 	// MENU OUTILS
 	//méthode pour zoomer sur l'arbre
 	public void zoom()
 	{
-		this.panelPrincipal.getPanelAffichage().zoom();
+		this.ihm.getPanelAffichage().zoom();
 	}
 	//Méthode pour Dézoomer sur l'arbre
 	public void deZoom()
 	{
-		this.panelPrincipal.getPanelAffichage().deZoom();
+		this.ihm.getPanelAffichage().deZoom();
 	}
 	//Méthode pour afficher un ancètre de plus dans l'arbre
 	public void monter()
 	{
-		this.panelPrincipal.getPanelAffichage().monter();
+		this.ihm.getPanelAffichage().monter();
 	}
 	//Méthode pour afficher un ancètre de moins dans l'arbre
 	public void descendre()
 	{
-		this.panelPrincipal.getPanelAffichage().descendre();
+		this.ihm.getPanelAffichage().descendre();
 	}
 	// MENU A PROPOS
 	//Renseigne sur le logiciel

@@ -9,7 +9,7 @@ import javax.swing.JButton;
 class SelectionFiche extends JPanel implements ActionListener,MouseListener {
 
   private FichierGenealogique genealogique;
-  private PanelPrincipal panelPrincipal ;
+  private IHM ihm ;
   private Font font;
   private int  largeur;
   private JPopupMenu popUpMenu;
@@ -17,9 +17,9 @@ class SelectionFiche extends JPanel implements ActionListener,MouseListener {
   private JMenuItem  itemSupprimer;
   private FicheGenealogique ficheActive;
 
-  public SelectionFiche(PanelPrincipal panelPrincipal , int largeur)
+  public SelectionFiche(IHM ihm , int largeur)
   {
-    this.panelPrincipal = panelPrincipal;
+    this.ihm = ihm;
     this.setLayout(new FlowLayout());
     this.setBackground(Color.GRAY);
     this.setPreferredSize(new Dimension(150, 10));
@@ -74,17 +74,17 @@ class SelectionFiche extends JPanel implements ActionListener,MouseListener {
     {
       if(fiche != null && e.getSource() == fiche.getBouton())
       {
-        this.panelPrincipal.nouveau(fiche);
+        this.ihm.nouveau(fiche);
       }
     }
     if(e.getSource() == this.itemSupprimer) //Si on choisi de supprimer la fiche via le menu
     {
-      this.panelPrincipal.getFichier().supprimerFiche(this.ficheActive);
+      this.ihm.getFichier().supprimerFiche(this.ficheActive);
       this.maj();
     }
     if(e.getSource() == this.itemModifier) //Si on choisi de modifier la fiche via le menu
     {
-      new NouvelleFiche(this.ficheActive, this.panelPrincipal);
+      new NouvelleFiche(this.ficheActive, this.ihm);
     }
   }
 
