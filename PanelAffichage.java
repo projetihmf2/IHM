@@ -56,6 +56,7 @@ class PanelAffichage extends JPanel implements ActionListener, MouseListener
 
 	public void paint(Graphics g)
 	{
+		g.clearRect(0,0,this.getWidth(),this.getHeight());
 		if (this.fiche != null)
 		{
 			// effacement de la fenetre
